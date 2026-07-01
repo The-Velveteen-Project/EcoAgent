@@ -67,7 +67,7 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="glass-card p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold gradient-text mb-2">EcoAgent</h1>
+          <h1 className="text-3xl font-bold gradient-text mb-2">ALLO</h1>
           <p className="text-slate-400">{t('auth.register_subtitle')}</p>
         </div>
 

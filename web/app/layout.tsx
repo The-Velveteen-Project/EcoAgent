@@ -10,9 +10,9 @@ import './globals.css';
 import { LanguageProvider } from '@/lib/i18n/LanguageContext';
 
 export const metadata: Metadata = {
-  title: 'EcoAgent — Plataforma de Riesgo Climático',
+  title: 'ALLO — Adaptive Landslide Learning Observatory',
   description:
-    'Monitoreo y simulación estocástica de riesgo de deslizamientos en tiempo real para Manizales, Colombia.',
+    'Stochastic and agentic monitoring for climate-related landslide risk.',
 };
 
 export default function RootLayout({
