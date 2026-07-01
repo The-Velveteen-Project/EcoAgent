@@ -92,7 +92,7 @@ export function handleText(
               const args = JSON.parse(toolCall.function.arguments);
               const buffer = await voiceService.synthesize(args.summary_text);
               if (buffer) {
-                await ctx.replyWithVoice(new InputFile(buffer, 'ecoagent_voice.mp3'));
+                await ctx.replyWithVoice(new InputFile(buffer, 'allo_voice.mp3'));
                 toolResult = 'OK: Audio report explicitly sent to user.';
               } else {
                 toolResult = 'ERROR: Could not generate audio at this time.';

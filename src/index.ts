@@ -37,7 +37,7 @@ process.on('uncaughtException', (error) => {
 
 // ── Composition Root ─────────────────────────────────────────
 async function main(): Promise<void> {
-  logger.info('Composing EcoAgent dependency graph...');
+  logger.info('Composing ALLO dependency graph...');
 
   // 1. Infrastructure layer
   const pythonSimulationEngine = new PythonCIREngine(settings.PYTHON_API_URL);
@@ -103,6 +103,6 @@ async function main(): Promise<void> {
 }
 
 main().catch((err) => {
-  logger.fatal({ err }, 'Failed to start EcoAgent');
+  logger.fatal({ err }, 'Failed to start ALLO');
   process.exit(1);
 });

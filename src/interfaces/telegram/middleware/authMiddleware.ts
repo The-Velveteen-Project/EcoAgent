@@ -64,7 +64,7 @@ export function createAuthMiddleware(
       
       const name = ctx.from.first_name || 'usuario';
       await ctx.reply(
-        `Hola ${name}. EcoAgent es una plataforma SaaS privada.\n\n` +
+        `Hola ${name}. ALLO es una plataforma privada de monitoreo y soporte a decisiones.\n\n` +
         `Para desbloquear todas las funciones:\n` +
         `1. Regístrate en la plataforma web.\n` +
         `2. Vincula tu Telegram usando tu ID: \`${userId}\`.\n\n` +

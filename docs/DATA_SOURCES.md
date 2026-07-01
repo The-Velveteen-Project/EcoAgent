@@ -24,7 +24,7 @@ Legend for **Role**: `train` = model calibration/training · `val` = validation/
 | **ERA5-Land** | Reanalysis: rainfall, temp, humidity, soil moisture | ~9 km (0.1°), hourly, since 1950 | Global | GEE; Copernicus CDS | covariate, context | Its soil-moisture band is a *weak* proxy for `S_t`, not ground truth. |
 | **GPM IMERG** | Rainfall (satellite) | 0.1° (~11 km), 30 min, since 2000 | 60°N–S | GEE; NASA | context, nowcasting (regional) | Coarse for the local case. |
 | **NASA POWER** | Daily meteorology | ~0.5°, daily | Global | REST API | fallback | Very coarse; last-resort forcing. |
-| **Open-Meteo** (currently in EcoAgent) | Forecast/current weather | Point API | Global | Public API | deploy (current) | Convenience API; not authoritative for calibration. |
+| **Open-Meteo** (currently in the local app) | Forecast/current weather | Point API | Global | Public API | deploy (current) | Convenience API; not authoritative for calibration. |
 
 ---
 

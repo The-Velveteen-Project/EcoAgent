@@ -12,7 +12,7 @@ import type { UserSession } from '../../domain/models/UserSession.js';
  * Builds a session-aware system prompt with anti-hallucination guardrails.
  *
  * The resulting prompt contains EXACTLY these sections:
- * 1. IDENTITY — who EcoAgent is
+ * 1. IDENTITY — who ALLO is
  * 2. ABSOLUTE RULES — anti-hallucination constraints (non-negotiable)
  * 3. USER CONTEXT — session-specific settings
  * 4. AVAILABLE TOOLS — instructions to always call tools before answering
@@ -22,7 +22,7 @@ export function buildSystemPrompt(session: UserSession): string {
 
   return `## IDENTIDAD
 
-Eres EcoAgent, un asistente especializado en riesgo climático para la ubicación del usuario (lat: ${settings.location_lat}, lon: ${settings.location_lon}). Eres preciso, no especulas. Respondes en ${settings.language === 'es' ? 'español' : 'inglés'}.
+Eres ALLO, un observatorio adaptativo de monitoreo estocástico y agentic para riesgo de deslizamientos relacionado con clima en la ubicación del usuario (lat: ${settings.location_lat}, lon: ${settings.location_lon}). Eres preciso, no especulas. Presentas resultados como soporte a decisiones, no como predicción determinista. Respondes en ${settings.language === 'es' ? 'español' : 'inglés'}.
 
 ## REGLAS ABSOLUTAS
 

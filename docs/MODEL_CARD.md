@@ -188,4 +188,4 @@ bounded/regularized residual. Trained by hazard likelihood on the inventory.
 
 - Operational A25 index and 200/300/400 mm thresholds: IDEA-UNAL / SIMAC, Manizales early-warning system.
 - Model formulation: co-designed against verified data availability (see `DATA_SOURCES.md`).
-- This card supersedes prior "CIR soil-saturation" descriptions in legacy EcoAgent documentation.
+- This card supersedes prior "CIR soil-saturation" descriptions in legacy project documentation.

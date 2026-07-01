@@ -30,7 +30,7 @@ export function handleStart() {
 
     await ctx.reply(
       `¡Hola ${name}! 👋\n\n` +
-      `Soy *EcoAgent*, tu analista de riesgo climático regional.\n\n` +
+      `Soy *ALLO*, un observatorio adaptativo para monitoreo estocástico del riesgo de deslizamientos relacionado con clima.\n\n` +
       `🛡️ Esta es una plataforma privada. Para activar tu cuenta, ve al Panel Web y vincula este código:\n\n` +
       `🆔 **Código de Vinculación:** \`${chatId}\`\n\n` +
       `Una vez vinculado, podrás usar:\n` +
@@ -75,7 +75,7 @@ export function handleClima(riskAnalysis: RiskAnalysisUseCase) {
       // If voice buffer is available, send as voice message
       if (report.audio_buffer) {
         await ctx.replyWithVoice(
-          new InputFile(report.audio_buffer, 'alerta_ecoagent.mp3')
+          new InputFile(report.audio_buffer, 'alerta_allo.mp3')
         );
       }
     } catch (err: unknown) {
@@ -169,7 +169,7 @@ export function handleAyuda() {
 
     if (isEn) {
       await ctx.reply(
-        `📖 *EcoAgent Commands*\n\n` +
+        `📖 *ALLO Commands*\n\n` +
         `/clima — Real-time risk analysis with CIR simulation\n` +
         `/modelo — Explains the underlying mathematical model\n` +
         `/configurar — View your current settings\n` +
@@ -180,7 +180,7 @@ export function handleAyuda() {
       );
     } else {
       await ctx.reply(
-        `📖 *Comandos de EcoAgent*\n\n` +
+        `📖 *Comandos de ALLO*\n\n` +
         `/clima — Análisis de riesgo en tiempo real con simulación CIR\n` +
         `/modelo — Explica el modelo matemático de fondo\n` +
         `/configurar — Ver tu configuración actual\n` +

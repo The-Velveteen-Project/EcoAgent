@@ -80,10 +80,10 @@ export function createBot(deps: BotDependencies): Bot<EcoAgentContext> {
  * Starts the bot with long-polling.
  */
 export async function startBot(bot: Bot<EcoAgentContext>): Promise<void> {
-  logger.info('Starting EcoAgent Telegram bot (long-polling)...');
+  logger.info('Starting ALLO Telegram bot (long-polling)...');
   bot.start({
     onStart: (botInfo) => {
-      logger.info({ username: botInfo.username }, 'EcoAgent bot connected to Telegram');
+      logger.info({ username: botInfo.username }, 'ALLO bot connected to Telegram');
     },
   });
 }

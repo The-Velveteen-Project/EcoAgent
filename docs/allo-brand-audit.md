@@ -1,7 +1,7 @@
-# EcoAgent — Brand Coherence & Pruning Audit
+# ALLO — Brand Coherence & Pruning Audit
 
 ## 1. Executive Verdict
-EcoAgent is a highly functional, operational product that successfully differentiates itself from the parent "Velveteen Project" lab site through its system-in-motion aesthetic and real-time focus. It carries significant technical authority (mentioning CIR and stochastic models). However, it currently suffers from "thematic inflation"—leaning too heavily into dashboard tropes, overly dramatic "engine" language, and a visual system that occasionally trades Velveteen's "premium restraint" for generic SaaS "glow" effects.
+ALLO is a highly functional, operational product that successfully differentiates itself from the parent "Velveteen Project" lab site through its system-in-motion aesthetic and real-time focus. It carries significant technical authority (mentioning CIR and stochastic models). However, it currently suffers from "thematic inflation"—leaning too heavily into dashboard tropes, overly dramatic "engine" language, and a visual system that occasionally trades Velveteen's "premium restraint" for generic SaaS "glow" effects.
 
 ## 2. What Already Works
 - **Operational Specificity**: The real-time sensing focus and the use of technical artifacts (terminal windows, risk maps) align with the Velveteen "applied lab" identity.
@@ -18,7 +18,7 @@ EcoAgent is a highly functional, operational product that successfully different
 
 ## 4. What Should Be Preserved as Product-Specific
 - **Cobalt Blue Accent**: The use of Blue (`#3b82f6`) effectively separates the product from the parent lab's Teal, signaling "Climate/Operational" rather than "General Lab."
-- **Terminal Visual**: The idea of a terminal "heartbeat" is excellent for EcoAgent's operational nature, though its execution needs to be less "hacker theme" and more "system monitor."
+- **Terminal Visual**: The idea of a terminal "heartbeat" is excellent for ALLO's operational nature, though its execution needs to be less "hacker theme" and more "system monitor."
 - **Data Density**: The KPI-heavy dashboard is appropriate for this domain and should not be simplified into a "marketing dashboard."
 
 ## 5. Section-by-Section Review
@@ -33,7 +33,7 @@ EcoAgent is a highly functional, operational product that successfully different
 - **Consistency**: There is a slight mismatch between the "landing" CSS variables and the "dashboard" CSS variables. These should be unified under a single, coherent product design system.
 
 ## 7. Product Storytelling Diagnosis
-EcoAgent is currently framed as an "Engine" or a "Detector." To align with Velveteen, it should move toward being framed as a "Decision Support System" or an "Operational Framework." The story should be less about the "code running" (terminal outputs) and more about the "rigor of the decision" the system enables.
+ALLO is currently framed as an "Engine" or a "Detector." To align with Velveteen, it should move toward being framed as a "Decision Support System" or an "Operational Framework." The story should be less about the "code running" (terminal outputs) and more about the "rigor of the decision" the system enables.
 
 ## 8. Prioritized Next Steps
 
@@ -43,7 +43,7 @@ EcoAgent is currently framed as an "Engine" or a "Detector." To align with Velve
 - **Prune Emoji**: Remove the cloud emoji from the wordmark.
 
 ### Improve next
-- **Hierarchy Refinement**: Clarify the relationship between Velveteen (parent) and EcoAgent (product) in the hero wordmark.
+- **Hierarchy Refinement**: Clarify the relationship between Velveteen (parent) and ALLO (product) in the hero wordmark.
 - **Visual Restraint Pass**: Reduce glow effects and shadows across the landing and dashboard.
 - **Terminal Refinement**: Make the terminal visual less "dramatic" and more "analytical."
 

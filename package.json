@@ -1,7 +1,7 @@
 {
-  "name": "ecoagent",
+  "name": "allo",
   "version": "2.0.0",
-  "description": "EcoAgent — Stochastic Climate Risk Platform",
+  "description": "ALLO — Adaptive Landslide Learning Observatory",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {

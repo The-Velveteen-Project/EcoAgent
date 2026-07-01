@@ -10,7 +10,7 @@
 import type { ChatCompletionTool } from 'openai/resources/chat/completions.js';
 
 /**
- * OpenAI function-calling tool definitions for the EcoAgent.
+ * OpenAI function-calling tool definitions for ALLO.
  * Descriptions are intentionally prescriptive to force tool use.
  */
 export const agentTools: readonly ChatCompletionTool[] = [

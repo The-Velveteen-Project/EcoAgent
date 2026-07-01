@@ -21,7 +21,7 @@ logging.basicConfig(level=getattr(logging, settings.log_level))
 log = logging.getLogger("cir_engine")
 
 app = FastAPI(
-    title="EcoAgent CIR Simulation Engine",
+    title="ALLO CIR Simulation Engine",
     description="Cox-Ingersoll-Ross stochastic model for landslide risk assessment",
     version="1.0.0",
 )
