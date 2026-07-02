@@ -88,3 +88,27 @@ CREATE POLICY "Service role can insert reports"
 -- Index for efficient queries by user
 CREATE INDEX IF NOT EXISTS idx_reports_user_id ON public.risk_reports(user_id);
 CREATE INDEX IF NOT EXISTS idx_reports_created_at ON public.risk_reports(created_at DESC);
+
+-- ══════════════════════════════════════════
+-- Physical Site State
+-- ══════════════════════════════════════════
+CREATE TABLE IF NOT EXISTS public.site_state (
+  site_id TEXT PRIMARY KEY,
+  S_estimate FLOAT8 NOT NULL CHECK (S_estimate >= 0 AND S_estimate <= 1),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+ALTER TABLE public.site_state ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Authenticated users can read physical site state"
+  ON public.site_state FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Service role can insert physical site state"
+  ON public.site_state FOR INSERT
+  WITH CHECK (auth.role() = 'service_role');
+
+CREATE POLICY "Service role can update physical site state"
+  ON public.site_state FOR UPDATE
+  USING (auth.role() = 'service_role')
+  WITH CHECK (auth.role() = 'service_role');

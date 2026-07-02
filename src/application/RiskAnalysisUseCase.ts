@@ -12,6 +12,7 @@ import type { IVoiceService } from '../domain/ports/IVoiceService.js';
 import type { IWeatherService, WeatherData } from '../domain/ports/IWeatherService.js';
 import type { ISessionRepository } from '../infrastructure/session/SessionRepository.js';
 import { type AlertThreshold, DEFAULT_USER_SETTINGS } from '../domain/models/UserSession.js';
+import type { Site } from '../domain/models/Site.js';
 import {
   SimulationRateLimitError,
   SimulationServiceUnavailableError,
@@ -33,6 +34,7 @@ export interface RiskReport {
 export class RiskAnalysisUseCase {
   private static readonly WEATHER_RETRY_DELAYS_MS = [800, 1800] as const;
   private static readonly SIMULATION_RETRY_DELAYS_MS = [1200, 2600] as const;
+  private static readonly COLD_START_S0 = 0.2;
 
   constructor(
     private readonly simulationEngine: ISimulationEngine,
@@ -75,6 +77,8 @@ export class RiskAnalysisUseCase {
     );
 
     // 3. Run CIR simulation with weather data
+    const site = this.buildConfiguredSite(settings.location_lat, settings.location_lon);
+    const initialSaturation = await this.resolveInitialSaturation(site.id);
     const simulation = await this.retryStep(
       'simulation',
       RiskAnalysisUseCase.SIMULATION_RETRY_DELAYS_MS,
@@ -84,12 +88,19 @@ export class RiskAnalysisUseCase {
         temperature_c: weather.temperature_c,
         n_simulations: 1000,
         time_horizon_hours: 24,
+        S0: initialSaturation,
+        rain_series: this.buildHourlyRainSeries(weather.precipitation_mm, 24),
+        dt_hours: 1,
+        seed: this.seedFromChatId(chatId),
+        site_id: site.id,
+        site,
       }),
       (err) =>
         err instanceof SimulationServiceUnavailableError ||
         err instanceof SimulationRateLimitError,
       { chatId }
     );
+    await this.sessionRepo.saveSiteState(site.id, this.extractSaturationEstimate(simulation));
 
     // 4. Generate AI Executive Summary
     let aiSummary = '';
@@ -187,6 +198,50 @@ export class RiskAnalysisUseCase {
       `Humedad: ${weather.humidity_pct} por ciento. ` +
       `Se recomienda monitoreo constante.`
     );
+  }
+
+  private buildConfiguredSite(lat: number, lon: number): Site {
+    return {
+      id: `configured-site:${lat.toFixed(5)},${lon.toFixed(5)}`,
+      name: `Configured site ${lat.toFixed(5)}, ${lon.toFixed(5)}`,
+      lat,
+      lon,
+      // TODO(verify): enrich with verified covariates from docs/DATA_SOURCES.md §C loaders.
+      covariates: {},
+    };
+  }
+
+  private async resolveInitialSaturation(siteId: string): Promise<number> {
+    const persisted = await this.sessionRepo.getSiteState(siteId);
+    if (persisted !== null) {
+      return persisted;
+    }
+
+    // TODO(verify): replace this low cold-start with warm-up over the last ~25 days of
+    // verified IDEA/SIMAC rainfall once the rainfall loader is connected here.
+    logger.warn(
+      { siteId, S0: RiskAnalysisUseCase.COLD_START_S0 },
+      'No persisted physical site state or verified 25-day rainfall warm-up available; using low uncalibrated cold-start'
+    );
+    return RiskAnalysisUseCase.COLD_START_S0;
+  }
+
+  private extractSaturationEstimate(simulation: CIRSimulationOutput): number {
+    return Math.min(Math.max(simulation.S_mean ?? simulation.mean_saturation, 0), 1);
+  }
+
+  private buildHourlyRainSeries(totalPrecipitationMm: number, horizonHours: number): number[] {
+    const steps = Math.max(1, horizonHours);
+    return Array.from({ length: steps }, () => totalPrecipitationMm / steps);
+  }
+
+  private seedFromChatId(chatId: string): number {
+    let hash = 2166136261;
+    for (const char of chatId) {
+      hash ^= char.charCodeAt(0);
+      hash = Math.imul(hash, 16777619);
+    }
+    return hash >>> 0;
   }
 
   private buildReportMessage(weather: WeatherData, sim: CIRSimulationOutput, aiSummary: string, lang: string): string {

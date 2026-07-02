@@ -52,6 +52,34 @@ class CIRSimulationInput(BaseModel):
         gt=0,
         description="Forward projection horizon in hours. Longer = more uncertainty in the forecast.",
     )
+    S0: float | None = Field(
+        default=None,
+        ge=0,
+        le=1,
+        description="Initial latent saturation state. New official path from MODEL_CARD.md §3.",
+    )
+    rain_series: list[float] | None = Field(
+        default=None,
+        description="Rainfall forcing series across the horizon. Each element is the rainfall amount for one dt_hours bin.",
+    )
+    dt_hours: float | None = Field(
+        default=None,
+        gt=0,
+        description="Time-step size in hours for each rain_series bin.",
+    )
+    seed: int | None = Field(
+        default=None,
+        ge=0,
+        description="Seed for reproducible Monte Carlo simulation.",
+    )
+    site_id: str | None = Field(
+        default=None,
+        description="Optional site identifier for future per-site persistence and covariates.",
+    )
+    site: dict | None = Field(
+        default=None,
+        description="Optional site payload. Accepted for compatibility with the TypeScript contract.",
+    )
 
     @field_validator("n_simulations")
     @classmethod
@@ -62,10 +90,55 @@ class CIRSimulationInput(BaseModel):
             )
         return v
 
+    @field_validator("rain_series")
+    @classmethod
+    def check_rain_series(cls, v: list[float] | None) -> list[float] | None:
+        if v is None:
+            return v
+        if len(v) == 0:
+            raise ValueError("rain_series must contain at least one value")
+        if any(value < 0 for value in v):
+            raise ValueError("rain_series cannot contain negative rainfall values")
+        return v
+
 
 
 class CIRSimulationOutput(BaseModel):
     """Result of the CIR stochastic simulation."""
+
+    prob_failure: float = Field(
+        ...,
+        ge=0,
+        le=1,
+        description="Probability of exceeding the critical saturation threshold over the horizon.",
+    )
+    S_mean: float = Field(
+        ...,
+        ge=0,
+        le=1,
+        description="Mean peak saturation over the simulation horizon.",
+    )
+    S_std: float = Field(
+        ...,
+        ge=0,
+        description="Standard deviation of peak saturation over the horizon.",
+    )
+    S_q_high: float = Field(
+        ...,
+        ge=0,
+        le=1,
+        description="High quantile of peak saturation over the horizon.",
+    )
+    hazard_probability_mean: float = Field(
+        ...,
+        ge=0,
+        le=1,
+        description="Mean hazard-derived path failure probability across Monte Carlo paths.",
+    )
+    model_version: str = Field(
+        ...,
+        description="Internal model version string for non-breaking schema evolution.",
+    )
 
     risk_probability: float = Field(
         ...,
@@ -97,6 +170,6 @@ class CIRSimulationOutput(BaseModel):
         """Human-readable summary ready to send to the LLM."""
         return (
             f"Nivel de riesgo: {self.alert_level.value}. "
-            f"Probabilidad: {self.risk_probability:.1%}. "
-            f"Saturación media: {self.mean_saturation:.4f} ± {self.std_saturation:.4f}."
+            f"Probabilidad: {self.prob_failure:.1%}. "
+            f"Saturación media: {self.S_mean:.4f} ± {self.S_std:.4f}."
         )

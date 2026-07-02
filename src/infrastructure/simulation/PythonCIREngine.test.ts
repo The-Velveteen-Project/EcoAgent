@@ -51,9 +51,19 @@ const VALID_INPUT: CIRSimulationInput = {
   temperature_c: 18,
   n_simulations: 1000,
   time_horizon_hours: 24,
+  S0: 0.45,
+  rain_series: new Array(24).fill(15 / 24),
+  dt_hours: 1,
+  seed: 7,
 };
 
 const VALID_RESPONSE = {
+  prob_failure: 0.35,
+  S_mean: 0.42,
+  S_std: 0.08,
+  S_q_high: 0.61,
+  hazard_probability_mean: 0.29,
+  model_version: 'jacobi_rainfall_forced_v2',
   risk_probability: 0.35,
   mean_saturation: 0.42,
   std_saturation: 0.08,
@@ -101,5 +111,52 @@ describe('PythonCIREngine', () => {
     expect(result.alert_level).toBe('MEDIUM');
     expect(result.mean_saturation).toBe(0.42);
     expect(result.std_saturation).toBe(0.08);
+  });
+
+  it('accepts optional site metadata without breaking the HTTP payload contract', async () => {
+    const axios = await import('axios');
+    const mockClient = (axios.default.create as ReturnType<typeof vi.fn>).mock.results[0]?.value;
+
+    if (mockClient) {
+      mockClient.post.mockResolvedValueOnce({ data: VALID_RESPONSE });
+    }
+
+    await engine.simulate({
+      ...VALID_INPUT,
+      site_id: 'manizales-west-slope',
+      site: {
+        id: 'manizales-west-slope',
+        name: 'Manizales West Slope',
+        lat: 5.0703,
+        lon: -75.5138,
+        covariates: {
+          slope: null,
+          lithology: null,
+        },
+      },
+    });
+
+    expect(mockClient?.post).toHaveBeenCalledWith('/simulate_risk', {
+      precipitation_mm: VALID_INPUT.precipitation_mm,
+      humidity_pct: VALID_INPUT.humidity_pct,
+      temperature_c: VALID_INPUT.temperature_c,
+      n_simulations: VALID_INPUT.n_simulations,
+      time_horizon_hours: VALID_INPUT.time_horizon_hours,
+      S0: VALID_INPUT.S0,
+      rain_series: VALID_INPUT.rain_series,
+      dt_hours: VALID_INPUT.dt_hours,
+      seed: VALID_INPUT.seed,
+      site_id: 'manizales-west-slope',
+      site: {
+        id: 'manizales-west-slope',
+        name: 'Manizales West Slope',
+        lat: 5.0703,
+        lon: -75.5138,
+        covariates: {
+          slope: null,
+          lithology: null,
+        },
+      },
+    });
   });
 });

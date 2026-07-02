@@ -41,6 +41,12 @@ export class PythonCIREngine implements ISimulationEngine {
         temperature_c: input.temperature_c,
         n_simulations: input.n_simulations,
         time_horizon_hours: input.time_horizon_hours,
+        S0: input.S0,
+        rain_series: input.rain_series,
+        dt_hours: input.dt_hours,
+        seed: input.seed,
+        site_id: input.site_id,
+        site: input.site,
       });
 
       // Validate response against Zod schema — catches contract mismatches

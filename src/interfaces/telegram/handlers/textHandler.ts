@@ -86,6 +86,14 @@ export function handleText(
                 temperature_c: weather.temperature_c,
                 n_simulations: args.n_simulations || 1000,
                 time_horizon_hours: args.time_horizon_hours || 24,
+                S0: typeof args.S0 === 'number' ? args.S0 : 0.5,
+                rain_series: buildHourlyRainSeries(
+                  weather.precipitation_mm,
+                  args.time_horizon_hours || 24
+                ),
+                dt_hours: 1,
+                seed: seedFromChatId(chatId),
+                site_id: `configured-site:${chatId}`,
               });
               toolResult = JSON.stringify(sim);
             } else if (toolCall.function.name === 'send_voice_report') {
@@ -156,4 +164,18 @@ export function handleText(
       );
     }
   };
+}
+
+function buildHourlyRainSeries(totalPrecipitationMm: number, horizonHours: number): number[] {
+  const steps = Math.max(1, Math.round(horizonHours));
+  return Array.from({ length: steps }, () => totalPrecipitationMm / steps);
+}
+
+function seedFromChatId(chatId: string): number {
+  let hash = 2166136261;
+  for (const char of chatId) {
+    hash ^= char.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
 }

@@ -139,6 +139,37 @@ export class SupabaseSessionRepository implements ISessionRepository {
     logger.info({ chatId, settings }, 'Supabase user settings updated');
   }
 
+  async getSiteState(siteId: string): Promise<number | null> {
+    const { data, error } = await this.supabase
+      .from('site_state')
+      .select('S_estimate')
+      .eq('site_id', siteId)
+      .maybeSingle();
+
+    if (error) {
+      logger.error({ err: error, siteId }, 'Failed to read physical site saturation state');
+      return null;
+    }
+
+    return typeof data?.S_estimate === 'number' ? data.S_estimate : null;
+  }
+
+  async saveSiteState(siteId: string, saturationEstimate: number): Promise<void> {
+    const { error } = await this.supabase
+      .from('site_state')
+      .upsert({
+        site_id: siteId,
+        S_estimate: saturationEstimate,
+        updated_at: new Date().toISOString(),
+      }, {
+        onConflict: 'site_id',
+      });
+
+    if (error) {
+      logger.error({ err: error, siteId }, 'Failed to persist physical site saturation state');
+    }
+  }
+
   async appendMessage(chatId: string, message: Message): Promise<void> {
     // In SaaS, we can skip text message DB logging to save Supabase storage,
     // or we can implement it if needed. The core is risk_reports.

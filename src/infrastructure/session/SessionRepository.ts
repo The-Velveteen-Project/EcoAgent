@@ -25,6 +25,8 @@ export interface ISessionRepository {
   save(session: UserSession): Promise<void>;
   getSettings(chatId: string): Promise<UserSettings | null>;
   updateSettings(chatId: string, settings: Partial<UserSettings>): Promise<void>;
+  getSiteState(siteId: string): Promise<number | null>;
+  saveSiteState(siteId: string, saturationEstimate: number): Promise<void>;
   appendMessage(chatId: string, message: Message): Promise<void>;
   getHistory(chatId: string, limit?: number): Promise<readonly Message[]>;
   saveReport(chatId: string, report: RiskReport): Promise<void>;
@@ -70,6 +72,12 @@ export class SQLiteSessionRepository implements ISessionRepository {
       );
 
       CREATE INDEX IF NOT EXISTS idx_messages_chat_id ON messages(chat_id);
+
+      CREATE TABLE IF NOT EXISTS site_state (
+        site_id TEXT PRIMARY KEY NOT NULL,
+        S_estimate REAL NOT NULL CHECK (S_estimate >= 0 AND S_estimate <= 1),
+        updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+      );
     `);
   }
 
@@ -173,6 +181,26 @@ export class SQLiteSessionRepository implements ISessionRepository {
       );
 
     logger.info({ chatId, settings }, 'User settings updated');
+  }
+
+  async getSiteState(siteId: string): Promise<number | null> {
+    const row = this.db
+      .prepare('SELECT S_estimate FROM site_state WHERE site_id = ?')
+      .get(siteId) as { S_estimate: number } | undefined;
+
+    return row?.S_estimate ?? null;
+  }
+
+  async saveSiteState(siteId: string, saturationEstimate: number): Promise<void> {
+    this.db
+      .prepare(
+        `INSERT INTO site_state (site_id, S_estimate, updated_at)
+         VALUES (?, ?, datetime('now'))
+         ON CONFLICT(site_id) DO UPDATE SET
+           S_estimate = excluded.S_estimate,
+           updated_at = datetime('now')`
+      )
+      .run(siteId, saturationEstimate);
   }
 
   async appendMessage(chatId: string, message: Message): Promise<void> {

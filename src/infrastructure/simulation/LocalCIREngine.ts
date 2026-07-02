@@ -12,101 +12,130 @@ import type {
   ISimulationEngine,
 } from '../../domain/ports/ISimulationEngine.js';
 import { logger } from '../../config/logger.js';
+import {
+  describeAlertAnchoring,
+  normalizeJacobiInput,
+  roundJacobiResult,
+} from './jacobiModel.js';
 
 export class LocalCIREngine implements ISimulationEngine {
   async simulate(input: CIRSimulationInput): Promise<CIRSimulationOutput> {
     const startTime = Date.now();
+    const normalized = normalizeJacobiInput(input);
 
-    const a = 0.5;
-    const sigma = 0.1;
+    const steps = normalized.rainSeries.length;
+    const dtDays = normalized.dtHours / 24;
+    const sqrtDt = Math.sqrt(dtDays);
+    const saturations = new Float64Array(normalized.nSimulations).fill(normalized.S0);
+    const peakSaturation = new Float64Array(normalized.nSimulations).fill(normalized.S0);
+    const hazardIntegrals = new Float64Array(normalized.nSimulations).fill(0);
+    const rng = new DeterministicNormalGenerator(normalized.seed);
 
-    let b = 0.4;
-    b += input.precipitation_mm * 0.05;
-    b += (input.humidity_pct / 100) * 0.2;
+    for (let step = 0; step < steps; step += 1) {
+      const rainfall = normalized.rainSeries[step] ?? 0;
+      const rho = 1 - Math.exp(-(rainfall / Math.max(normalized.dtHours, 1e-9)) / 12);
+      const { kappa, lambda, sigma, h0, beta, criticalSaturation } = normalized.terrain;
 
-    const evaporationFactor = Math.max(0, 1 - (input.temperature_c / 50) * 0.1);
-    b *= evaporationFactor;
-
-    const sigmaAdjusted = sigma * (1 + input.precipitation_mm / 20);
-
-    const totalTime = input.time_horizon_hours / 24;
-    const steps = 100;
-    const dt = totalTime / steps;
-    const criticalThreshold = 0.6;
-
-    const maxSaturationPerPath = new Array<number>(input.n_simulations).fill(0.05);
-
-    for (let simIndex = 0; simIndex < input.n_simulations; simIndex += 1) {
-      let currentRisk = 0.05;
-      let maxSaturation = currentRisk;
-
-      for (let step = 1; step < steps; step += 1) {
-        const current = Math.max(currentRisk, 0);
-        const drift = a * (b - current) * dt;
-        const diffusion =
-          sigmaAdjusted * Math.sqrt(current) * this.randomNormal() * Math.sqrt(dt);
-
-        currentRisk = Math.max(current + drift + diffusion, 0);
-        if (currentRisk > maxSaturation) {
-          maxSaturation = currentRisk;
+      for (let simIndex = 0; simIndex < normalized.nSimulations; simIndex += 1) {
+        const current = saturations[simIndex] ?? normalized.S0;
+        const drift = (kappa * rho * (1 - current) - lambda * current) * dtDays;
+        const diffusion = sigma * Math.sqrt(Math.max(current * (1 - current), 0)) * sqrtDt * rng.next();
+        const next = this.numericSafeguardUnitInterval(current + drift + diffusion);
+        saturations[simIndex] = next;
+        if (next > (peakSaturation[simIndex] ?? next)) {
+          peakSaturation[simIndex] = next;
         }
-      }
 
-      maxSaturationPerPath[simIndex] = maxSaturation;
+        const hazard = h0 * Math.exp(beta * Math.max(next - criticalSaturation, 0));
+        hazardIntegrals[simIndex] = (hazardIntegrals[simIndex] ?? 0) + hazard * dtDays;
+      }
     }
 
-    const meanSaturation = this.mean(maxSaturationPerPath);
-    const stdSaturation = this.std(maxSaturationPerPath, meanSaturation);
-    const riskProbability =
-      maxSaturationPerPath.filter((value) => value > criticalThreshold).length /
-      input.n_simulations;
+    const failureCount = peakSaturation.filter(
+      (value) => value > normalized.terrain.criticalSaturation
+    ).length;
+    const pathFailureProbabilities = hazardIntegrals.map((value) => 1 - Math.exp(-value));
+    const result = roundJacobiResult({
+      probFailure: failureCount / normalized.nSimulations,
+      SMean: this.mean(peakSaturation),
+      SStd: this.std(peakSaturation, this.mean(peakSaturation)),
+      SQHigh: this.quantile(peakSaturation, 0.95),
+      hazardProbabilityMean: this.mean(pathFailureProbabilities),
+    });
 
-    const alertLevel =
-      riskProbability > 0.7 ? 'CRITICAL' :
-      riskProbability > 0.4 ? 'HIGH' :
-      riskProbability > 0.15 ? 'MEDIUM' :
-      'LOW';
+    const a25AnchorBand = describeAlertAnchoring(normalized.totalRainfallMm);
 
     const elapsed = Date.now() - startTime;
     logger.warn(
       {
         elapsed_ms: elapsed,
-        n_simulations: input.n_simulations,
-        risk_probability: riskProbability,
-        alert_level: alertLevel,
+        n_simulations: normalized.nSimulations,
+        risk_probability: result.risk_probability,
+        alert_level: result.alert_level,
+        model_version: result.model_version,
+        a25_anchor_band: a25AnchorBand,
       },
-      'Using local CIR fallback engine'
+      'Using local stochastic fallback engine with Jacobi rainfall-forced hazard model'
     );
 
-    return {
-      risk_probability: Number(riskProbability.toFixed(4)),
-      mean_saturation: Number(meanSaturation.toFixed(4)),
-      std_saturation: Number(stdSaturation.toFixed(4)),
-      alert_level: alertLevel,
-    };
+    return result;
   }
 
   async healthCheck(): Promise<boolean> {
     return true;
   }
 
-  private randomNormal(): number {
-    let u = 0;
-    let v = 0;
-
-    while (u === 0) u = Math.random();
-    while (v === 0) v = Math.random();
-
-    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  private numericSafeguardUnitInterval(value: number): number {
+    // Numeric safeguard only: absorbs floating-point / discretization leakage at the boundaries.
+    if (value <= 0) return 0;
+    if (value >= 1) return 1;
+    return value;
   }
 
-  private mean(values: readonly number[]): number {
-    return values.reduce((sum, value) => sum + value, 0) / values.length;
+  private mean(values: ArrayLike<number>): number {
+    let sum = 0;
+    for (let index = 0; index < values.length; index += 1) {
+      sum += values[index] ?? 0;
+    }
+    return sum / values.length;
   }
 
-  private std(values: readonly number[], mean: number): number {
-    const variance =
-      values.reduce((sum, value) => sum + (value - mean) ** 2, 0) / values.length;
+  private std(values: ArrayLike<number>, mean: number): number {
+    let sum = 0;
+    for (let index = 0; index < values.length; index += 1) {
+      const value = values[index] ?? 0;
+      sum += (value - mean) ** 2;
+    }
+    const variance = sum / values.length;
     return Math.sqrt(variance);
+  }
+
+  private quantile(values: ArrayLike<number>, q: number): number {
+    const sorted = Array.from(values).sort((a, b) => a - b);
+    const index = Math.min(sorted.length - 1, Math.max(0, Math.floor((sorted.length - 1) * q)));
+    return sorted[index] ?? sorted[sorted.length - 1] ?? 0;
+  }
+}
+
+class DeterministicNormalGenerator {
+  private state: number;
+
+  constructor(seed: number) {
+    this.state = seed >>> 0;
+  }
+
+  next(): number {
+    let u1 = 0;
+    let u2 = 0;
+
+    while (u1 <= 0) u1 = this.nextUniform();
+    while (u2 <= 0) u2 = this.nextUniform();
+
+    return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+  }
+
+  private nextUniform(): number {
+    this.state = (1664525 * this.state + 1013904223) >>> 0;
+    return this.state / 4294967296;
   }
 }
