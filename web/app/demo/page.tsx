@@ -94,8 +94,8 @@ export default function DemoPage() {
           <h1 style={styles.title}>Landslide risk, right now</h1>
           <p style={styles.subtitle}>
             Pick a location in the Valle de Aburrá (Medellín) and get its current
-            landslide-risk reading, computed live from our weather stations and
-            soil-moisture sensors across the valley.
+            landslide-risk reading, computed live from real-time weather and our
+            stochastic soil-saturation model for the Valle de Aburrá.
           </p>
         </header>
 
@@ -189,8 +189,9 @@ export default function DemoPage() {
 
             <div style={styles.realtimeNote}>
               <span style={styles.pulse} />
-              Real-time reading from our weather stations and soil-moisture sensors
-              (Valle de Aburrá) · {new Date(result.computed_at).toLocaleString()}
+              Real-time meteorological data · soil saturation estimated by our
+              stochastic model for the Valle de Aburrá monitoring network ·{' '}
+              {new Date(result.computed_at).toLocaleString()}
             </div>
             <div style={styles.modelNote}>
               Stochastic CIR soil-saturation model · {result.model_version}
