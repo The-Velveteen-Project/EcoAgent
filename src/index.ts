@@ -1,9 +1,10 @@
 // ---
-// 📚 POR QUÉ: Entry point que compone el DI container y arranca el bot.
-//    Aquí se construye el "composition root" de Clean Architecture: se instancian
-//    todas las implementaciones concretas y se inyectan en las clases que las necesitan.
-//    Sin este punto central, las dependencias estarían dispersas y acopladas.
-// 📁 ARCHIVO: src/index.ts
+// 📚 WHY: Entry point that composes the DI container and starts the bot.
+//    This is the Clean Architecture "composition root": every concrete
+//    implementation is instantiated here and injected into the classes that
+//    need it. Without this central point, dependencies would be scattered and
+//    tightly coupled.
+// 📁 FILE: src/index.ts
 // ---
 
 import OpenAI from 'openai';

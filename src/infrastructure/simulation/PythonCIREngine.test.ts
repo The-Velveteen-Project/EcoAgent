@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Verifica que errores del motor de simulación se clasifican correctamente.
-//    Sin estos tests, un ECONNREFUSED podría causar un error genérico "Error" en vez de
-//    SimulationServiceUnavailableError — y el handler no podría decidir si hacer retry
-//    o mostrar un mensaje distinto al usuario.
-// 📁 ARCHIVO: src/infrastructure/simulation/PythonCIREngine.test.ts
+// 📚 WHY: Verifies that simulation engine errors are correctly classified.
+//    Without these tests, an ECONNREFUSED could cause a generic "Error" instead of
+//    SimulationServiceUnavailableError — and the handler wouldn't be able to decide whether to retry
+//    or show a different message to the user.
+// 📁 FILE: src/infrastructure/simulation/PythonCIREngine.test.ts
 // ---
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';

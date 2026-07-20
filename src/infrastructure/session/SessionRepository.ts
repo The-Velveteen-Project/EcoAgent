@@ -1,10 +1,10 @@
 // ---
-// 📚 POR QUÉ: Repositorio de sesiones con SQLite para aislamiento multi-usuario.
-//    Cada chat_id tiene sus propios settings e historial — NUNCA se mezclan filas.
-//    El índice sobre chat_id garantiza búsquedas O(1). Sin este aislamiento,
-//    un usuario podría ver datos de otros, y sin el índice, las queries degradarían
-//    a O(n) conforme crece la base de usuarios.
-// 📁 ARCHIVO: src/infrastructure/session/SessionRepository.ts
+// 📚 WHY: SQLite session repository for multi-user isolation.
+//    Each chat_id has its own settings and history — rows are NEVER mixed.
+//    The index on chat_id guarantees O(1) lookups. Without this isolation,
+//    one user could see another's data, and without the index, queries would degrade
+//    to O(n) as the user base grows.
+// 📁 FILE: src/infrastructure/session/SessionRepository.ts
 // ---
 
 import Database from 'better-sqlite3';

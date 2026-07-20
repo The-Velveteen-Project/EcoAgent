@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Reemplaza todos los console.log/console.error con un logger estructurado.
-//    En producción, los logs JSON son parseables por herramientas como Railway, Datadog, etc.
-//    En desarrollo, pino-pretty los formatea legibles. Sin esto, los logs son texto plano
-//    sin timestamps, niveles ni contexto — imposibles de filtrar o buscar.
-// 📁 ARCHIVO: src/config/logger.ts
+// 📚 WHY: Replaces all console.log/console.error with a structured logger.
+//    In production, JSON logs are parseable by tools like Railway, Datadog, etc.
+//    In development, pino-pretty formats them to be readable. Without this, logs are plain text
+//    with no timestamps, levels, or context — impossible to filter or search.
+// 📁 FILE: src/config/logger.ts
 // ---
 
 import pino from 'pino';

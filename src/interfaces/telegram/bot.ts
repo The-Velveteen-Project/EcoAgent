@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Punto de inicialización del bot separado de la lógica de handlers.
-//    NO inicializa servicios aquí — los recibe por parámetro (DI). Esto permite
-//    testear el bot con mocks, cambiar servicios sin tocar el wiring de Grammy,
-//    y mantener un solo lugar donde se registran middlewares y comandos.
-// 📁 ARCHIVO: src/interfaces/telegram/bot.ts
+// 📚 WHY: Bot initialization point separated from handler logic.
+//    Do NOT initialize services here — receive them via parameter (DI). This allows
+//    testing the bot with mocks, changing services without touching the Grammy wiring,
+//    and keeping a single place where middlewares and commands are registered.
+// 📁 FILE: src/interfaces/telegram/bot.ts
 // ---
 
 import { Bot } from 'grammy';

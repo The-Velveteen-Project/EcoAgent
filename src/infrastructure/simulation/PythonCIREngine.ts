@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Implementa ISimulationEngine como cliente HTTP al motor Python CIR.
-//    Valida la respuesta con Zod en runtime para detectar contratos rotos entre
-//    TypeScript y Python inmediatamente (no en runtime caótico horas después).
-//    Timeout de 30s porque simulaciones Monte Carlo pueden ser lentas con n=10000.
-// 📁 ARCHIVO: src/infrastructure/simulation/PythonCIREngine.ts
+// 📚 WHY: Implements ISimulationEngine as an HTTP client to the Python CIR engine.
+//    Validates the response with Zod at runtime to detect broken contracts between
+//    TypeScript and Python immediately (not in chaotic runtime hours later).
+//    30s timeout because Monte Carlo simulations can be slow with n=10000.
+// 📁 FILE: src/infrastructure/simulation/PythonCIREngine.ts
 // ---
 
 import axios, { AxiosError, type AxiosInstance } from 'axios';

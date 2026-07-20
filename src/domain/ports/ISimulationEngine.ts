@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Define el contrato entre la aplicación y el motor de simulación CIR.
-//    Usando una interfaz (port), el bot no depende directamente de la implementación Python.
-//    Esto permite testear con mocks, cambiar el engine a Rust/C++ sin tocar el bot,
-//    y validar inputs/outputs con Zod en ambos lados del contrato.
-// 📁 ARCHIVO: src/domain/ports/ISimulationEngine.ts
+// 📚 WHY: Defines the contract between the application and the CIR simulation engine.
+//    Using an interface (port), the bot does not depend directly on the Python implementation.
+//    This allows testing with mocks, changing the engine to Rust/C++ without touching the bot,
+//    and validating inputs/outputs with Zod on both sides of the contract.
+// 📁 FILE: src/domain/ports/ISimulationEngine.ts
 // ---
 
 import { z } from 'zod';

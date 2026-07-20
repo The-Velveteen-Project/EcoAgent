@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Define el contrato para obtener datos meteorológicos en tiempo real.
-//    Separar la interfaz de la implementación (Open-Meteo) permite cambiar el proveedor
-//    sin tocar la lógica del bot, y testear con datos deterministas en los tests.
-//    Las coordenadas por defecto centran el servicio en Manizales, Colombia.
-// 📁 ARCHIVO: src/domain/ports/IWeatherService.ts
+// 📚 WHY: Defines the contract for obtaining real-time weather data.
+//    Separating the interface from the implementation (Open-Meteo) allows changing the provider
+//    without touching the bot's logic, and testing with deterministic data in the tests.
+//    The default coordinates center the service on Manizales, Colombia.
+// 📁 FILE: src/domain/ports/IWeatherService.ts
 // ---
 
 import { z } from 'zod';

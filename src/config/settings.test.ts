@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Protege contra regresiones en la validación de variables de entorno.
-//    Si alguien despliega sin TELEGRAM_BOT_TOKEN, este test asegura que el proceso
-//    moriría con un mensaje claro en lugar de un crash en runtime 10 minutos después.
-//    Si OPENROUTER_API_KEY no empieza con "sk-", detecta API keys malformadas.
-// 📁 ARCHIVO: src/config/settings.test.ts
+// 📚 WHY: Protects against regressions in environment variable validation.
+//    If someone deploys without TELEGRAM_BOT_TOKEN, this test ensures the process
+//    would die with a clear message instead of a runtime crash 10 minutes later.
+//    If OPENROUTER_API_KEY doesn't start with "sk-", it detects malformed API keys.
+// 📁 FILE: src/config/settings.test.ts
 // ---
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';

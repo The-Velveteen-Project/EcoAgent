@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Envuelve el motor Python con un fallback local para continuidad operativa.
-//    El bot debería preferir el servicio Python por observabilidad y aislamiento, pero si
-//    ese servicio cae, el usuario no debe quedarse sin `/clima`. Este wrapper cambia
-//    solamente el punto de fallo de infraestructura, no el contrato del dominio.
-// 📁 ARCHIVO: src/infrastructure/simulation/FailoverSimulationEngine.ts
+// 📚 WHY: Wraps the Python engine with a local fallback for operational continuity.
+//    The bot should prefer the Python service for observability and isolation, but if
+//    that service goes down, the user should not be left without `/clima`. This wrapper changes
+//    only the infrastructure failure point, not the domain contract.
+// 📁 FILE: src/infrastructure/simulation/FailoverSimulationEngine.ts
 // ---
 
 import type {

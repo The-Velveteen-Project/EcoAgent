@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Centraliza y valida TODAS las variables de entorno al startup usando Zod.
-//    Sin esto, variables faltantes o malformadas causan crashes crípticos en runtime
-//    (ej: "Cannot read property of undefined" a las 3am en producción).
-//    Con Zod, el proceso muere inmediatamente con un listado exhaustivo de qué falta.
-// 📁 ARCHIVO: src/config/settings.ts
+// 📚 WHY: Centralizes and validates ALL environment variables at startup using Zod.
+//    Without this, missing or malformed variables cause cryptic runtime crashes
+//    (e.g., "Cannot read property of undefined" at 3am in production).
+//    With Zod, the process dies immediately with an exhaustive list of what is missing.
+// 📁 FILE: src/config/settings.ts
 // ---
 
 import { z } from 'zod';

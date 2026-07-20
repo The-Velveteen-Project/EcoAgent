@@ -1,10 +1,10 @@
 // ---
-// 📚 POR QUÉ: Orquesta el flujo completo de análisis de riesgo como un caso de uso.
-//    Recibe todas las dependencias por constructor (DI) para testabilidad total.
-//    El flujo weather→simulation→voice es secuencial e inmutable: si falta un paso,
-//    el reporte se degrada gracefully (sin voz, pero con datos). Esto es el corazón
-//    de la lógica de negocio, desacoplada de Telegram, HTTP, o cualquier framework.
-// 📁 ARCHIVO: src/application/RiskAnalysisUseCase.ts
+// 📚 WHY: Orchestrates the complete risk analysis flow as a use case.
+//    Receives all dependencies via constructor (DI) for full testability.
+//    The weather→simulation→voice flow is sequential and immutable: if a step is missing,
+//    the report degrades gracefully (without voice, but with data). This is the heart
+//    of the business logic, decoupled from Telegram, HTTP, or any framework.
+// 📁 FILE: src/application/RiskAnalysisUseCase.ts
 // ---
 
 import type { ISimulationEngine, CIRSimulationOutput } from '../domain/ports/ISimulationEngine.js';

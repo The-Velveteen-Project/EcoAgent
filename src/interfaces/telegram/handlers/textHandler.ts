@@ -1,8 +1,8 @@
 // ---
-// 📚 POR QUÉ: Implementa el cerebro del Agente de IA. Recibe el texto en lenguaje
-//    natural, lo procesa usando OpenRouter (OpenAI SDK), inyecta el SystemPrompt
-//    con contexto de la sesión, y ejecuta comandos (Function Calling) dinámicamente.
-// 📁 ARCHIVO: src/interfaces/telegram/handlers/textHandler.ts
+// 📚 WHY: Implements the brain of the AI Agent. Receives natural language
+//    text, processes it using OpenRouter (OpenAI SDK), injects the SystemPrompt
+//    with session context, and executes commands (Function Calling) dynamically.
+// 📁 FILE: src/interfaces/telegram/handlers/textHandler.ts
 // ---
 
 import OpenAI from 'openai';
@@ -158,9 +158,11 @@ export function handleText(
       }
     } catch (err: unknown) {
       logger.error({ err }, 'Error in textHandler LLM process');
+      const isEn = ctx.session?.settings.language !== 'es';
       await ctx.reply(
-        'Lo siento, estoy teniendo problemas conectándome con mi cerebro (LLM). ' +
-        'Intenta de nuevo más tarde.'
+        isEn
+          ? "I can't process that request right now. Please try again in a moment."
+          : 'No puedo procesar esa solicitud en este momento. Intenta de nuevo en un momento.'
       );
     }
   };

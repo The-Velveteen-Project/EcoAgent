@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Define el contrato para síntesis de voz como servicio opcional.
-//    El diseño clave: retorna null en lugar de lanzar excepciones.
-//    Sin esto, un error de ElevenLabs (rate limit, timeout) bloquearía la respuesta
-//    de texto al usuario. La voz es un "nice-to-have", no debe romper el flujo principal.
-// 📁 ARCHIVO: src/domain/ports/IVoiceService.ts
+// 📚 WHY: Defines the contract for voice synthesis as an optional service.
+//    The key design: returns null instead of throwing exceptions.
+//    Without this, an ElevenLabs error (rate limit, timeout) would block the text
+//    response to the user. Voice is a "nice-to-have", it must not break the main flow.
+// 📁 FILE: src/domain/ports/IVoiceService.ts
 // ---
 
 export interface VoiceOptions {

@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Define errores tipados para el motor de simulación en lugar de strings genéricos.
-//    Sin clases de error propias, un catch solo tiene "Error" — no puedes distinguir si el
-//    servicio está caído (retry con backoff), si el response es inválido (bug en Python),
-//    o si estás siendo rate-limited (esperar). Cada tipo requiere una estrategia distinta.
-// 📁 ARCHIVO: src/infrastructure/simulation/errors.ts
+// 📚 WHY: Define typed errors for the simulation engine instead of generic strings.
+//    Without our own error classes, a catch only has "Error" — you can't distinguish whether
+//    the service is down (retry with backoff), whether the response is invalid (bug in Python),
+//    or whether you're being rate-limited (wait). Each type requires a different strategy.
+// 📁 FILE: src/infrastructure/simulation/errors.ts
 // ---
 
 /**

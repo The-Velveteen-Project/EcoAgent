@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Implementa IWeatherService usando Open-Meteo (API gratuita, sin API key).
-//    Valida la respuesta con Zod porque la API de Open-Meteo puede cambiar su formato
-//    sin previo aviso. El timeout de 10s es agresivo a propósito: si el servicio tarda
-//    más, es mejor fallar rápido y decirle al usuario que lo intente luego.
-// 📁 ARCHIVO: src/infrastructure/weather/OpenMeteoService.ts
+// 📚 WHY: Implements IWeatherService using Open-Meteo (free API, no API key).
+//    Validates the response with Zod because the Open-Meteo API can change its format
+//    without prior notice. The 10s timeout is aggressive on purpose: if the service takes
+//    longer, it's better to fail fast and tell the user to try again later.
+// 📁 FILE: src/infrastructure/weather/OpenMeteoService.ts
 // ---
 
 import axios, { type AxiosInstance } from 'axios';

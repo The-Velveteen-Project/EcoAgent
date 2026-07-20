@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Implementa IVoiceService con el contrato "nunca lanza excepciones".
-//    ElevenLabs puede fallar por rate limits, créditos agotados, o timeout — pero la
-//    respuesta de texto al usuario NUNCA debe bloquearse por un fallo de voz. El error se
-//    loggea, se retorna null, y el bot continúa funcionando solo con texto.
-// 📁 ARCHIVO: src/infrastructure/voice/ElevenLabsService.ts
+// 📚 WHY: Implements IVoiceService with the "never throws exceptions" contract.
+//    ElevenLabs can fail due to rate limits, exhausted credits, or timeout — but the
+//    text response to the user must NEVER be blocked by a voice failure. The error is
+//    logged, null is returned, and the bot continues working with text only.
+// 📁 FILE: src/infrastructure/voice/ElevenLabsService.ts
 // ---
 
 import { ElevenLabsClient } from 'elevenlabs';

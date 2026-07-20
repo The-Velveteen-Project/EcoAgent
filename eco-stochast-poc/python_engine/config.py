@@ -1,9 +1,9 @@
 # ---
-# 📚 POR QUÉ: Centraliza la configuración del motor Python con pydantic-settings.
-#    Los parámetros CIR (a, b, sigma) son calibrados para Manizales y deben ser
-#    fácilmente ajustables sin tocar código. Sin esto, los parámetros estarían
-#    hardcodeados en la función de simulación, imposibles de cambiar en deployment.
-# 📁 ARCHIVO: eco-stochast-poc/python_engine/config.py
+# 📚 WHY: Centralizes the Python engine configuration with pydantic-settings.
+#    The CIR parameters (a, b, sigma) are calibrated for Manizales and must be
+#    easily adjustable without touching code. Without this, the parameters would be
+#    hardcoded in the simulation function, impossible to change in deployment.
+# 📁 FILE: eco-stochast-poc/python_engine/config.py
 # ---
 
 from pydantic_settings import BaseSettings, SettingsConfigDict

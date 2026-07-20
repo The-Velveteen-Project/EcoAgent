@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Provee un motor CIR local en TypeScript como respaldo del servicio Python.
-//    Si el microservicio FastAPI está caído o inaccesible, el bot no debe quedar inútil.
-//    Este fallback conserva la misma lógica central (Euler-Maruyama + Monte Carlo) para
-//    mantener continuidad operativa sin inventar datos ni degradar a reglas estáticas.
-// 📁 ARCHIVO: src/infrastructure/simulation/LocalCIREngine.ts
+// 📚 WHY: Provides a local CIR engine in TypeScript as a fallback for the Python service.
+//    If the FastAPI microservice is down or unreachable, the bot must not become useless.
+//    This fallback preserves the same core logic (Euler-Maruyama + Monte Carlo) to
+//    maintain operational continuity without inventing data or degrading to static rules.
+// 📁 FILE: src/infrastructure/simulation/LocalCIREngine.ts
 // ---
 
 import type {

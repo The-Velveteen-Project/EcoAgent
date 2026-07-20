@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Define los tipos de dominio para sesiones de usuario multi-tenant.
-//    Cada UserSession está aislada por telegram_chat_id — NUNCA se comparten datos
-//    entre usuarios. Sin este aislamiento, un usuario podría ver el historial o
-//    configuración de otro, lo cual es inaceptable en un sistema SaaS.
-// 📁 ARCHIVO: src/domain/models/UserSession.ts
+// 📚 WHY: Defines the domain types for multi-tenant user sessions.
+//    Each UserSession is isolated by telegram_chat_id — data is NEVER shared
+//    between users. Without this isolation, one user could see another's history
+//    or settings, which is unacceptable in a SaaS system.
+// 📁 FILE: src/domain/models/UserSession.ts
 // ---
 
 export type AlertThreshold = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';

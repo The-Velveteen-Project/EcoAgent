@@ -10,7 +10,7 @@ translate that signal into auditable alert levels for monitoring and operational
 
 ALLO is **not** a deterministic landslide predictor. It does not claim to predict the exact time,
 location, or occurrence of an individual landslide. The scientific ground truth for that framing lives
-in [docs/MODEL_CARD.md](/Users/cmorregof/Velveteen/the-velveteen-project/the-velveteen-project/EcoAgent/docs/MODEL_CARD.md) and the verified data catalog lives in [docs/DATA_SOURCES.md](/Users/cmorregof/Velveteen/the-velveteen-project/the-velveteen-project/EcoAgent/docs/DATA_SOURCES.md).
+in [docs/MODEL_CARD.md](docs/MODEL_CARD.md) and the verified data catalog lives in [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md).
 
 ## Product posture
 
@@ -18,7 +18,7 @@ in [docs/MODEL_CARD.md](/Users/cmorregof/Velveteen/the-velveteen-project/the-vel
 - Stochastic simulation and agentic interpretation for decision support
 - Research prototype grounded in explicit limits, uncertainty, and data provenance
 
-For design alignment and identity notes, see [docs/allo-brand-audit.md](/Users/cmorregof/Velveteen/the-velveteen-project/the-velveteen-project/EcoAgent/docs/allo-brand-audit.md).
+For design alignment and identity notes, see [docs/allo-brand-audit.md](docs/allo-brand-audit.md).
 
 ## Current system shape
 
@@ -69,7 +69,7 @@ real rainfall forcing, Monte Carlo propagation, and alert communication. The gov
 - support human judgment with auditable alert bands and traceable data inputs
 
 The long-form scientific scope, exclusions, invariants, and model tiers are defined in
-[docs/MODEL_CARD.md](/Users/cmorregof/Velveteen/the-velveteen-project/the-velveteen-project/EcoAgent/docs/MODEL_CARD.md).
+[docs/MODEL_CARD.md](docs/MODEL_CARD.md).
 
 ## Repository structure
 

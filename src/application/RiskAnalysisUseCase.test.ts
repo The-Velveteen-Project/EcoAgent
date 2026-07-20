@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Verifica que el use case Orchestra correctamente la lógica de negocio:
-//    voz SOLO se llama para HIGH/CRITICAL + voice_enabled, y errores de weather se
-//    propagan sin inventar datos. Sin estos tests, un refactor podría silenciosamente
-//    dejar de llamar synthesize(), o peor, generar reportes con datos ficticios.
-// 📁 ARCHIVO: src/application/RiskAnalysisUseCase.test.ts
+// 📚 WHY: Verifies that the use case correctly orchestrates the business logic:
+//    voice is ONLY called for HIGH/CRITICAL + voice_enabled, and weather errors
+//    propagate without fabricating data. Without these tests, a refactor could silently
+//    stop calling synthesize(), or worse, generate reports with fictitious data.
+// 📁 FILE: src/application/RiskAnalysisUseCase.test.ts
 // ---
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';

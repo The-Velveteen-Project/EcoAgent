@@ -1,9 +1,9 @@
 // ---
-// 📚 POR QUÉ: Middleware de autenticación que reemplaza la lista estática de IDs.
-//    Cada mensaje pasa por aquí primero. Busca la sesión del usuario en el repositorio;
-//    si no existe, le pide que se registre. Sin esto, cualquier persona podría usar
-//    el bot sin restricción, o peor, el bot crashearía al no encontrar un session.
-// 📁 ARCHIVO: src/interfaces/telegram/middleware/authMiddleware.ts
+// 📚 WHY: Authentication middleware that replaces the static list of IDs.
+//    Every message passes through here first. It looks up the user's session in the repository;
+//    if it doesn't exist, it asks them to register. Without this, anyone could use
+//    the bot without restriction, or worse, the bot would crash when it couldn't find a session.
+// 📁 FILE: src/interfaces/telegram/middleware/authMiddleware.ts
 // ---
 
 import type { Context, NextFunction } from 'grammy';
@@ -62,13 +62,13 @@ export function createAuthMiddleware(
         'Unauthorized access attempt blocked'
       );
       
-      const name = ctx.from.first_name || 'usuario';
+      const name = ctx.from.first_name || 'user';
       await ctx.reply(
-        `Hola ${name}. ALLO es una plataforma privada de monitoreo y soporte a decisiones.\n\n` +
-        `Para desbloquear todas las funciones:\n` +
-        `1. Regístrate en la plataforma web.\n` +
-        `2. Vincula tu Telegram usando tu ID: \`${userId}\`.\n\n` +
-        `Puedes usar /modelo para aprender cómo funcionamos.`
+        `Hello ${name}. ALLO is a private monitoring and decision-support platform.\n\n` +
+        `To unlock all features:\n` +
+        `1. Sign up on the web platform.\n` +
+        `2. Link your Telegram using your ID: \`${userId}\`.\n\n` +
+        `You can use /modelo to learn how we work.`
       );
       return;
     }
@@ -80,7 +80,7 @@ export function createAuthMiddleware(
       await next();
     } catch (err: unknown) {
       logger.error({ err, chatId }, 'Failed to load user session');
-      await ctx.reply('Error interno al cargar tu sesión. Intenta de nuevo.');
+      await ctx.reply('Internal error loading your session. Try again.');
     }
   };
 }

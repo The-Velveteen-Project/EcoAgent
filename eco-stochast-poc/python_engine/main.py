@@ -1,10 +1,10 @@
 # ---
-# 📚 POR QUÉ: Reescribe el motor Python con modelos tipados, healthcheck, y logging.
-#    La versión anterior no tenía /health (Docker no podía verificar readiness),
-#    no loggeaba tiempos de ejecución, y usaba respuestas en español ("BAJO", "CRÍTICO")
-#    que no matcheaban el schema Zod del lado TypeScript. Ahora usa AlertLevel enum
-#    consistente con el contrato definido en ISimulationEngine.ts.
-# 📁 ARCHIVO: eco-stochast-poc/python_engine/main.py
+# 📚 WHY: Rewrite the Python engine with typed models, healthcheck, and logging.
+#    The previous version didn't have /health (Docker couldn't verify readiness),
+#    didn't log execution times, and used Spanish responses ("BAJO", "CRÍTICO")
+#    that didn't match the Zod schema on the TypeScript side. Now it uses AlertLevel enum
+#    consistent with the contract defined in ISimulationEngine.ts.
+# 📁 FILE: eco-stochast-poc/python_engine/main.py
 # ---
 
 import logging

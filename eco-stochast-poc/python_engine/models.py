@@ -1,10 +1,10 @@
 # ---
-# 📚 POR QUÉ: Define modelos Pydantic v2 con validación física y documentación inline.
-#    Cada campo tiene Field(description=...) explicando la física subyacente, lo que
-#    permite generar documentación API automática en /docs. Los validators rechazan
-#    inputs físicamente imposibles (precipitación negativa, exceso de simulaciones)
-#    ANTES de que lleguen al motor SDE — fail fast.
-# 📁 ARCHIVO: eco-stochast-poc/python_engine/models.py
+# 📚 WHY: Define Pydantic v2 models with physical validation and inline documentation.
+#    Each field has Field(description=...) explaining the underlying physics, which
+#    allows automatic API documentation generation at /docs. The validators reject
+#    physically impossible inputs (negative precipitation, excess simulations)
+#    BEFORE they reach the SDE engine — fail fast.
+# 📁 FILE: eco-stochast-poc/python_engine/models.py
 # ---
 
 from enum import StrEnum
@@ -169,7 +169,7 @@ class CIRSimulationOutput(BaseModel):
     def summary(self) -> str:
         """Human-readable summary ready to send to the LLM."""
         return (
-            f"Nivel de riesgo: {self.alert_level.value}. "
-            f"Probabilidad: {self.prob_failure:.1%}. "
-            f"Saturación media: {self.S_mean:.4f} ± {self.S_std:.4f}."
+            f"Risk level: {self.alert_level.value}. "
+            f"Probability: {self.prob_failure:.1%}. "
+            f"Mean saturation: {self.S_mean:.4f} ± {self.S_std:.4f}."
         )

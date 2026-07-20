@@ -1,9 +1,10 @@
 // ---
-// 📚 POR QUÉ: Verifica las reglas anti-alucinación del system prompt están presentes.
-//    Si un refactor borra accidentalmente la frase "sin haber invocado primero get_weather
-//    o simulate_risk", el LLM empezará a inventar datos climáticos. Este test es un
-//    guardrail de seguridad que impide regresiones en las defensas anti-alucinación.
-// 📁 ARCHIVO: src/application/prompts/buildSystemPrompt.test.ts
+// 📚 WHY: Verifies the system prompt's anti-hallucination rules are present.
+//    If a refactor accidentally deletes the phrase "without first calling
+//    get_weather or simulate_risk", the LLM will start inventing weather data.
+//    This test is a safety guardrail that prevents regressions in the
+//    anti-hallucination defenses.
+// 📁 FILE: src/application/prompts/buildSystemPrompt.test.ts
 // ---
 
 import { describe, it, expect } from 'vitest';
@@ -37,7 +38,7 @@ describe('buildSystemPrompt', () => {
     const prompt = buildSystemPrompt(session);
 
     expect(prompt).toContain(
-      'sin haber invocado primero get_weather o simulate_risk'
+      'without first calling get_weather or simulate_risk'
     );
   });
 
@@ -101,7 +102,7 @@ describe('buildSystemPrompt', () => {
       },
     });
 
-    expect(buildSystemPrompt(sessionVoiceOn)).toContain('sí');
-    expect(buildSystemPrompt(sessionVoiceOff)).toContain('no');
+    expect(buildSystemPrompt(sessionVoiceOn)).toContain('Voice enabled: yes');
+    expect(buildSystemPrompt(sessionVoiceOff)).toContain('Voice enabled: no');
   });
 });
