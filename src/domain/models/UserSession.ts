@@ -42,7 +42,7 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   alert_threshold: 'HIGH',
   location_lat: 5.0703,    // Manizales, Colombia
   location_lon: -75.5138,
-  language: 'es',
+  language: 'en',
   voice_enabled: true,
   report_frequency_hours: 6,
 } as const;

@@ -53,7 +53,7 @@ export class SQLiteSessionRepository implements ISessionRepository {
         alert_threshold TEXT NOT NULL DEFAULT 'HIGH',
         location_lat REAL NOT NULL DEFAULT 5.0703,
         location_lon REAL NOT NULL DEFAULT -75.5138,
-        language TEXT NOT NULL DEFAULT 'es',
+        language TEXT NOT NULL DEFAULT 'en',
         voice_enabled INTEGER NOT NULL DEFAULT 1,
         report_frequency_hours INTEGER NOT NULL DEFAULT 6,
         created_at TEXT NOT NULL DEFAULT (datetime('now')),
