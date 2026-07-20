@@ -1,7 +1,7 @@
 // ---
-// 📚 POR QUÉ: Configuración mínima de Vitest. Usa el resolver de TypeScript paths,
-//    y configura globals para describe/it/expect sin importarlos en cada archivo.
-// 📁 ARCHIVO: vitest.config.ts
+// 📚 WHY: Minimal Vitest configuration. Uses the TypeScript path resolver and
+//    enables globals for describe/it/expect without importing them in every file.
+// 📁 FILE: vitest.config.ts
 // ---
 
 import { defineConfig } from 'vitest/config';
