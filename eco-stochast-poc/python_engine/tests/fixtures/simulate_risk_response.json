@@ -1,0 +1,20 @@
+{
+  "prob_failure": 0.3143,
+  "prob_failure_q05": 0.3127,
+  "prob_failure_q95": 0.3232,
+  "prob_failure_horizon": 0.015,
+  "horizon_days": 1.0,
+  "alert_window_days": 25.0,
+  "exceedance_fraction": 0.27,
+  "S_mean": 0.7613,
+  "S_std": 0.0308,
+  "S_q_high": 0.8114,
+  "feller_low_ok": true,
+  "feller_high_ok": true,
+  "model_version": "jacobi_rainfall_forced_v3",
+  "alert_level": "MEDIUM",
+  "risk_probability": 0.3143,
+  "hazard_probability_mean": 0.3143,
+  "mean_saturation": 0.7613,
+  "std_saturation": 0.0308
+}
