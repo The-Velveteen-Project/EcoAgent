@@ -1,0 +1,1196 @@
+{
+  "study": "Guardrail-fidelity evaluation of the ALLO agentic explanation layer",
+  "generated_utc": "2026-07-29T15:25:29.436683+00:00",
+  "audited_artefacts": {
+    "system_prompt": "src/application/prompts/buildSystemPrompt.ts",
+    "tool_descriptions": "src/application/tools/agentTools.ts",
+    "data_contract": "src/domain/ports/ISimulationEngine.ts (JacobiSimulationOutputSchema)",
+    "alert_mapping": "src/infrastructure/simulation/jacobiModel.ts (mapAlertLevel)",
+    "agent_loop": "src/interfaces/telegram/handlers/textHandler.ts",
+    "model_version_string": "jacobi_rainfall_forced_v3"
+  },
+  "generation": {
+    "temperature": "provider default (temperature parameter rejected by the audited model; deployment sets none either)",
+    "max_tokens": 700,
+    "production_model": "configurable via settings.OPENROUTER_MODEL (default openai/gpt-4o-mini) — NOT audited here"
+  },
+  "bench": {
+    "probability_grid": [
+      0.03,
+      0.145,
+      0.155,
+      0.27,
+      0.395,
+      0.405,
+      0.55,
+      0.695,
+      0.705,
+      0.91
+    ],
+    "boundary_probabilities": [
+      0.695,
+      0.705,
+      0.395,
+      0.405,
+      0.145,
+      0.155
+    ],
+    "languages": [
+      "es",
+      "en"
+    ],
+    "contract_arms": [
+      "deployed",
+      "extended"
+    ],
+    "band_configurations": [
+      "narrow",
+      "wide",
+      "crossing"
+    ],
+    "replicates_arm_A": 3,
+    "total_fidelity_generations": 500,
+    "total_failure_generations": 96
+  },
+  "arms": {
+    "A_primary_full": {
+      "model": "claude-sonnet-5",
+      "n_generated": 300,
+      "n_incomplete_turn": 21,
+      "n_analysed": 279,
+      "probability_error": {
+        "k": 0,
+        "n": 279,
+        "rate": 0.0,
+        "ci_lo": 8.673617379884035e-19,
+        "ci_hi": 0.013581668113612246
+      },
+      "level_error": {
+        "k": 0,
+        "n": 279,
+        "rate": 0.0,
+        "ci_lo": 8.673617379884035e-19,
+        "ci_hi": 0.013581668113612246
+      },
+      "ungrounded_number": {
+        "k": 0,
+        "n": 279,
+        "rate": 0.0,
+        "ci_lo": 8.673617379884035e-19,
+        "ci_hi": 0.013581668113612246
+      },
+      "ungrounded_number_preadjudication": {
+        "k": 1,
+        "n": 279,
+        "rate": 0.0035842293906810036,
+        "ci_lo": 0.000632984939475608,
+        "ci_hi": 0.02001978232744408
+      },
+      "band_error_extended_contract": {
+        "k": 0,
+        "n": 173,
+        "rate": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.02172261441449037
+      },
+      "uncertainty_omission_deployed_contract": {
+        "k": 0,
+        "n": 106,
+        "rate": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.034972758589312314
+      },
+      "worst_case_drift_pp": 7.105427357601002e-15,
+      "exact_citation_rate": 1.0,
+      "first_mentioned_level_accuracy": 1.0,
+      "by_language": {
+        "en": {
+          "n": 148,
+          "probability_error": {
+            "k": 0,
+            "n": 148,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.025299143279357925
+          },
+          "level_error": {
+            "k": 0,
+            "n": 148,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.025299143279357925
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 148,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.025299143279357925
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 90,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.040935625582753064
+          }
+        },
+        "es": {
+          "n": 131,
+          "probability_error": {
+            "k": 0,
+            "n": 131,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.028488707078984578
+          },
+          "level_error": {
+            "k": 0,
+            "n": 131,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.028488707078984578
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 131,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.028488707078984578
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 83,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.04423530966181691
+          }
+        }
+      },
+      "by_alert_level": {
+        "CRITICAL": {
+          "n": 44,
+          "probability_error": {
+            "k": 0,
+            "n": 44,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.08029560379314069
+          },
+          "level_error": {
+            "k": 0,
+            "n": 44,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.08029560379314069
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 44,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.08029560379314069
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 29,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.11696979854821798
+          }
+        },
+        "HIGH": {
+          "n": 85,
+          "probability_error": {
+            "k": 0,
+            "n": 85,
+            "rate": 0.0,
+            "ci_lo": 3.469446951953614e-18,
+            "ci_hi": 0.043239483833468054
+          },
+          "level_error": {
+            "k": 0,
+            "n": 85,
+            "rate": 0.0,
+            "ci_lo": 3.469446951953614e-18,
+            "ci_hi": 0.043239483833468054
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 85,
+            "rate": 0.0,
+            "ci_lo": 3.469446951953614e-18,
+            "ci_hi": 0.043239483833468054
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 54,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.06641358811999687
+          }
+        },
+        "LOW": {
+          "n": 60,
+          "probability_error": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.06017185216863166
+          },
+          "level_error": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.06017185216863166
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.06017185216863166
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 36,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.09641862863535364
+          }
+        },
+        "MEDIUM": {
+          "n": 90,
+          "probability_error": {
+            "k": 0,
+            "n": 90,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.040935625582753064
+          },
+          "level_error": {
+            "k": 0,
+            "n": 90,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.040935625582753064
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 90,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.040935625582753064
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 54,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.06641358811999687
+          }
+        }
+      },
+      "boundary_vs_interior": {
+        "boundary": {
+          "n": 172,
+          "probability_error": {
+            "k": 0,
+            "n": 172,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.021846149640824094
+          },
+          "level_error": {
+            "k": 0,
+            "n": 172,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.021846149640824094
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 107,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.034657238034451
+          }
+        },
+        "interior": {
+          "n": 107,
+          "probability_error": {
+            "k": 0,
+            "n": 107,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.034657238034451
+          },
+          "level_error": {
+            "k": 0,
+            "n": 107,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.034657238034451
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 66,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.05500255703793636
+          }
+        }
+      },
+      "band_crossing_a_level_cut_point": {
+        "n": 129,
+        "band_error": {
+          "k": 0,
+          "n": 129,
+          "rate": 0.0,
+          "ci_lo": 0.0,
+          "ci_hi": 0.028917619970058008
+        },
+        "level_error": {
+          "k": 0,
+          "n": 129,
+          "rate": 0.0,
+          "ci_lo": 0.0,
+          "ci_hi": 0.028917619970058008
+        },
+        "probability_error": {
+          "k": 0,
+          "n": 129,
+          "rate": 0.0,
+          "ci_lo": 0.0,
+          "ci_hi": 0.028917619970058008
+        }
+      }
+    },
+    "B_primary_repeat": {
+      "model": "claude-sonnet-5",
+      "n_generated": 100,
+      "n_incomplete_turn": 6,
+      "n_analysed": 94,
+      "probability_error": {
+        "k": 1,
+        "n": 94,
+        "rate": 0.010638297872340425,
+        "ci_lo": 0.0018803957474697111,
+        "ci_hi": 0.057822912980730994
+      },
+      "level_error": {
+        "k": 1,
+        "n": 94,
+        "rate": 0.010638297872340425,
+        "ci_lo": 0.0018803957474697111,
+        "ci_hi": 0.057822912980730994
+      },
+      "ungrounded_number": {
+        "k": 0,
+        "n": 94,
+        "rate": 0.0,
+        "ci_lo": 3.469446951953614e-18,
+        "ci_hi": 0.03926207630924855
+      },
+      "ungrounded_number_preadjudication": {
+        "k": 0,
+        "n": 94,
+        "rate": 0.0,
+        "ci_lo": 3.469446951953614e-18,
+        "ci_hi": 0.03926207630924855
+      },
+      "band_error_extended_contract": {
+        "k": 1,
+        "n": 56,
+        "rate": 0.017857142857142856,
+        "ci_lo": 0.0031592103409354005,
+        "ci_hi": 0.09445637152220285
+      },
+      "uncertainty_omission_deployed_contract": {
+        "k": 0,
+        "n": 38,
+        "rate": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.091809868264718
+      },
+      "worst_case_drift_pp": 7.105427357601002e-15,
+      "exact_citation_rate": 0.9893617021276596,
+      "first_mentioned_level_accuracy": 0.9893617021276596,
+      "by_language": {
+        "en": {
+          "n": 49,
+          "probability_error": {
+            "k": 0,
+            "n": 49,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.072697819252136
+          },
+          "level_error": {
+            "k": 0,
+            "n": 49,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.072697819252136
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 49,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.072697819252136
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 29,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.11696979854821798
+          }
+        },
+        "es": {
+          "n": 45,
+          "probability_error": {
+            "k": 1,
+            "n": 45,
+            "rate": 0.022222222222222223,
+            "ci_lo": 0.003933598881538956,
+            "ci_hi": 0.11566681771794271
+          },
+          "level_error": {
+            "k": 1,
+            "n": 45,
+            "rate": 0.022222222222222223,
+            "ci_lo": 0.003933598881538956,
+            "ci_hi": 0.11566681771794271
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 45,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.07865159876689941
+          },
+          "band_error_extended": {
+            "k": 1,
+            "n": 27,
+            "rate": 0.037037037037037035,
+            "ci_lo": 0.006568145978621112,
+            "ci_hi": 0.18283465938530902
+          }
+        }
+      },
+      "by_alert_level": {
+        "CRITICAL": {
+          "n": 14,
+          "probability_error": {
+            "k": 1,
+            "n": 14,
+            "rate": 0.07142857142857142,
+            "ci_lo": 0.012722215243687496,
+            "ci_hi": 0.3146870443136827
+          },
+          "level_error": {
+            "k": 1,
+            "n": 14,
+            "rate": 0.07142857142857142,
+            "ci_lo": 0.012722215243687496,
+            "ci_hi": 0.3146870443136827
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 14,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.21531080281693193
+          },
+          "band_error_extended": {
+            "k": 1,
+            "n": 8,
+            "rate": 0.125,
+            "ci_lo": 0.022417491442616455,
+            "ci_hi": 0.4708881822974419
+          }
+        },
+        "HIGH": {
+          "n": 30,
+          "probability_error": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "level_error": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 18,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.17587922371468664
+          }
+        },
+        "LOW": {
+          "n": 20,
+          "probability_error": {
+            "k": 0,
+            "n": 20,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.16112515811625733
+          },
+          "level_error": {
+            "k": 0,
+            "n": 20,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.16112515811625733
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 20,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.16112515811625733
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 12,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.24249400674145444
+          }
+        },
+        "MEDIUM": {
+          "n": 30,
+          "probability_error": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "level_error": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 18,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.17587922371468664
+          }
+        }
+      },
+      "boundary_vs_interior": {
+        "boundary": {
+          "n": 57,
+          "probability_error": {
+            "k": 0,
+            "n": 57,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.06313883488074157
+          },
+          "level_error": {
+            "k": 0,
+            "n": 57,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.06313883488074157
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 35,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.09890099236623152
+          }
+        },
+        "interior": {
+          "n": 37,
+          "probability_error": {
+            "k": 1,
+            "n": 37,
+            "rate": 0.02702702702702703,
+            "ci_lo": 0.004786974450364537,
+            "ci_hi": 0.1382406986767123
+          },
+          "level_error": {
+            "k": 1,
+            "n": 37,
+            "rate": 0.02702702702702703,
+            "ci_lo": 0.004786974450364537,
+            "ci_hi": 0.1382406986767123
+          },
+          "band_error_extended": {
+            "k": 1,
+            "n": 21,
+            "rate": 0.047619047619047616,
+            "ci_lo": 0.008455987807038004,
+            "ci_hi": 0.22669360079952566
+          }
+        }
+      },
+      "band_crossing_a_level_cut_point": {
+        "n": 43,
+        "band_error": {
+          "k": 1,
+          "n": 43,
+          "rate": 0.023255813953488372,
+          "ci_lo": 0.004117087272978798,
+          "ci_hi": 0.12058993444111728
+        },
+        "level_error": {
+          "k": 1,
+          "n": 43,
+          "rate": 0.023255813953488372,
+          "ci_lo": 0.004117087272978798,
+          "ci_hi": 0.12058993444111728
+        },
+        "probability_error": {
+          "k": 1,
+          "n": 43,
+          "rate": 0.023255813953488372,
+          "ci_lo": 0.004117087272978798,
+          "ci_hi": 0.12058993444111728
+        }
+      }
+    },
+    "C_utility_model": {
+      "model": "claude-haiku-4-5-20251001",
+      "n_generated": 100,
+      "n_incomplete_turn": 0,
+      "n_analysed": 100,
+      "probability_error": {
+        "k": 0,
+        "n": 100,
+        "rate": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.03699349822370594
+      },
+      "level_error": {
+        "k": 0,
+        "n": 100,
+        "rate": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.03699349822370594
+      },
+      "ungrounded_number": {
+        "k": 4,
+        "n": 100,
+        "rate": 0.04,
+        "ci_lo": 0.015663303988310957,
+        "ci_hi": 0.0983707143774985
+      },
+      "ungrounded_number_preadjudication": {
+        "k": 5,
+        "n": 100,
+        "rate": 0.05,
+        "ci_lo": 0.021543679150310677,
+        "ci_hi": 0.11175046925102465
+      },
+      "band_error_extended_contract": {
+        "k": 1,
+        "n": 60,
+        "rate": 0.016666666666666666,
+        "ci_lo": 0.0029481597938164905,
+        "ci_hi": 0.08855129730252745
+      },
+      "uncertainty_omission_deployed_contract": {
+        "k": 1,
+        "n": 40,
+        "rate": 0.025,
+        "ci_lo": 0.004426831501224311,
+        "ci_hi": 0.128813689671843
+      },
+      "worst_case_drift_pp": 7.105427357601002e-15,
+      "exact_citation_rate": 1.0,
+      "first_mentioned_level_accuracy": 0.99,
+      "by_language": {
+        "en": {
+          "n": 50,
+          "probability_error": {
+            "k": 0,
+            "n": 50,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.0713475991644559
+          },
+          "level_error": {
+            "k": 0,
+            "n": 50,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.0713475991644559
+          },
+          "ungrounded_number": {
+            "k": 2,
+            "n": 50,
+            "rate": 0.04,
+            "ci_lo": 0.011038884324661206,
+            "ci_hi": 0.13460090690663823
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          }
+        },
+        "es": {
+          "n": 50,
+          "probability_error": {
+            "k": 0,
+            "n": 50,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.0713475991644559
+          },
+          "level_error": {
+            "k": 0,
+            "n": 50,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.0713475991644559
+          },
+          "ungrounded_number": {
+            "k": 2,
+            "n": 50,
+            "rate": 0.04,
+            "ci_lo": 0.011038884324661206,
+            "ci_hi": 0.13460090690663823
+          },
+          "band_error_extended": {
+            "k": 1,
+            "n": 30,
+            "rate": 0.03333333333333333,
+            "ci_lo": 0.0059085903796663175,
+            "ci_hi": 0.1667039099601182
+          }
+        }
+      },
+      "by_alert_level": {
+        "CRITICAL": {
+          "n": 20,
+          "probability_error": {
+            "k": 0,
+            "n": 20,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.16112515811625733
+          },
+          "level_error": {
+            "k": 0,
+            "n": 20,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.16112515811625733
+          },
+          "ungrounded_number": {
+            "k": 1,
+            "n": 20,
+            "rate": 0.05,
+            "ci_lo": 0.008881448797866148,
+            "ci_hi": 0.23613119350676545
+          },
+          "band_error_extended": {
+            "k": 1,
+            "n": 12,
+            "rate": 0.08333333333333333,
+            "ci_lo": 0.014865094400000889,
+            "ci_hi": 0.3538799112178778
+          }
+        },
+        "HIGH": {
+          "n": 30,
+          "probability_error": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "level_error": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 18,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.17587922371468664
+          }
+        },
+        "LOW": {
+          "n": 20,
+          "probability_error": {
+            "k": 0,
+            "n": 20,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.16112515811625733
+          },
+          "level_error": {
+            "k": 0,
+            "n": 20,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.16112515811625733
+          },
+          "ungrounded_number": {
+            "k": 0,
+            "n": 20,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.16112515811625733
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 12,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.24249400674145444
+          }
+        },
+        "MEDIUM": {
+          "n": 30,
+          "probability_error": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "level_error": {
+            "k": 0,
+            "n": 30,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.11351339322119766
+          },
+          "ungrounded_number": {
+            "k": 3,
+            "n": 30,
+            "rate": 0.1,
+            "ci_lo": 0.03459988873930399,
+            "ci_hi": 0.2562108258376542
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 18,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.17587922371468664
+          }
+        }
+      },
+      "boundary_vs_interior": {
+        "boundary": {
+          "n": 60,
+          "probability_error": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.06017185216863166
+          },
+          "level_error": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.06017185216863166
+          },
+          "band_error_extended": {
+            "k": 1,
+            "n": 36,
+            "rate": 0.027777777777777776,
+            "ci_lo": 0.00492040713819053,
+            "ci_hi": 0.14169718657297678
+          }
+        },
+        "interior": {
+          "n": 40,
+          "probability_error": {
+            "k": 0,
+            "n": 40,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.08762160123480767
+          },
+          "level_error": {
+            "k": 0,
+            "n": 40,
+            "rate": 0.0,
+            "ci_lo": 6.938893903907228e-18,
+            "ci_hi": 0.08762160123480767
+          },
+          "band_error_extended": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          }
+        }
+      },
+      "band_crossing_a_level_cut_point": {
+        "n": 44,
+        "band_error": {
+          "k": 1,
+          "n": 44,
+          "rate": 0.022727272727272728,
+          "ci_lo": 0.0040232520587292,
+          "ci_hi": 0.11807709701654145
+        },
+        "level_error": {
+          "k": 0,
+          "n": 44,
+          "rate": 0.0,
+          "ci_lo": 0.0,
+          "ci_hi": 0.08029560379314069
+        },
+        "probability_error": {
+          "k": 0,
+          "n": 44,
+          "rate": 0.0,
+          "ci_lo": 0.0,
+          "ci_hi": 0.08029560379314069
+        }
+      }
+    }
+  },
+  "run_to_run_stability": {
+    "paired_cases": 89,
+    "identical_cited_probability_rate": 1.0,
+    "max_between_run_difference_pp": 7.105427357601002e-15,
+    "band_flag_agreement": 1.0,
+    "level_flag_agreement": 1.0
+  },
+  "tool_failure_mode": {
+    "A_primary": {
+      "model": "claude-sonnet-5",
+      "n": 48,
+      "verbatim_fixed_message": {
+        "k": 24,
+        "n": 48,
+        "rate": 0.5,
+        "ci_lo": 0.3638933049972204,
+        "ci_hi": 0.6361066950027796
+      },
+      "rule2_literal_violation": {
+        "k": 24,
+        "n": 48,
+        "rate": 0.5,
+        "ci_lo": 0.3638933049972204,
+        "ci_hi": 0.6361066950027796
+      },
+      "rule2_semantic_violation": {
+        "k": 0,
+        "n": 48,
+        "rate": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.07410012969831867
+      },
+      "any_numeric_emitted": {
+        "k": 0,
+        "n": 48,
+        "rate": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.07410012969831867
+      },
+      "fabricated_risk_figure": {
+        "k": 0,
+        "n": 48,
+        "rate": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.07410012969831867
+      },
+      "by_language": {
+        "en": {
+          "n": 24,
+          "rule2_literal_violation": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          },
+          "rule2_semantic_violation": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          },
+          "fabricated_risk_figure": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          }
+        },
+        "es": {
+          "n": 24,
+          "rule2_literal_violation": {
+            "k": 24,
+            "n": 24,
+            "rate": 1.0,
+            "ci_lo": 0.8620237952691969,
+            "ci_hi": 1.0
+          },
+          "rule2_semantic_violation": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          },
+          "fabricated_risk_figure": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          }
+        }
+      }
+    },
+    "C_utility": {
+      "model": "claude-haiku-4-5-20251001",
+      "n": 48,
+      "verbatim_fixed_message": {
+        "k": 7,
+        "n": 48,
+        "rate": 0.14583333333333334,
+        "ci_lo": 0.07248249325429905,
+        "ci_hi": 0.27167176528201004
+      },
+      "rule2_literal_violation": {
+        "k": 20,
+        "n": 48,
+        "rate": 0.4166666666666667,
+        "ci_lo": 0.2884966777575467,
+        "ci_hi": 0.5571866771921731
+      },
+      "rule2_semantic_violation": {
+        "k": 4,
+        "n": 48,
+        "rate": 0.08333333333333333,
+        "ci_lo": 0.03288375681129166,
+        "ci_hi": 0.1955330179373072
+      },
+      "any_numeric_emitted": {
+        "k": 24,
+        "n": 48,
+        "rate": 0.5,
+        "ci_lo": 0.3638933049972204,
+        "ci_hi": 0.6361066950027796
+      },
+      "fabricated_risk_figure": {
+        "k": 0,
+        "n": 48,
+        "rate": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.07410012969831867
+      },
+      "by_language": {
+        "en": {
+          "n": 24,
+          "rule2_literal_violation": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          },
+          "rule2_semantic_violation": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          },
+          "fabricated_risk_figure": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          }
+        },
+        "es": {
+          "n": 24,
+          "rule2_literal_violation": {
+            "k": 20,
+            "n": 24,
+            "rate": 0.8333333333333334,
+            "ci_lo": 0.6414692934519597,
+            "ci_hi": 0.933213236727505
+          },
+          "rule2_semantic_violation": {
+            "k": 4,
+            "n": 24,
+            "rate": 0.16666666666666666,
+            "ci_lo": 0.06678676327249503,
+            "ci_hi": 0.3585307065480403
+          },
+          "fabricated_risk_figure": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci_lo": 0.0,
+            "ci_hi": 0.13797620473080308
+          }
+        }
+      }
+    },
+    "fixed_message_required": "I can't retrieve real-time data right now. Please try again in a few minutes."
+  },
+  "error_definitions": {
+    "probability_error": "cited failure probability differs from prob_failure by more than 0.51 percentage points, or no probability is cited",
+    "band_error": "extended contract: the supplied [prob_failure_lo, prob_failure_hi] is not reported at both endpoints (or as an equivalent half-width); deployed contract: no uncertainty statement of any kind",
+    "level_error": "the alert level from mapAlertLevel is not communicated anywhere in the explanation",
+    "ungrounded_number": "a probability-scale figure that matches no contract field nor any declared derived quantity"
+  }
+}
