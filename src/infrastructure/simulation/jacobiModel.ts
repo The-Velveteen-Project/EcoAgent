@@ -1,4 +1,4 @@
-import type { AlertLevel, CIRSimulationInput, CIRSimulationOutput } from '../../domain/ports/ISimulationEngine.js';
+import type { AlertLevel, JacobiSimulationInput, JacobiSimulationOutput } from '../../domain/ports/ISimulationEngine.js';
 
 export const JACOBI_MODEL_VERSION = 'jacobi_rainfall_forced_v2';
 const HOURS_PER_DAY = 24;
@@ -30,7 +30,7 @@ export interface NormalizedJacobiInput {
   readonly totalRainfallMm: number;
 }
 
-export interface JacobiSimulationResult extends CIRSimulationOutput {
+export interface JacobiSimulationResult extends JacobiSimulationOutput {
   readonly prob_failure: number;
   readonly S_mean: number;
   readonly S_std: number;
@@ -44,7 +44,7 @@ export interface JacobiSimulationResult extends CIRSimulationOutput {
  * This adapter expands that scalar into a flat rain series so rainfall still enters the
  * physics as a temporal forcing, never as a shifted equilibrium term.
  */
-export function normalizeJacobiInput(input: CIRSimulationInput): NormalizedJacobiInput {
+export function normalizeJacobiInput(input: JacobiSimulationInput): NormalizedJacobiInput {
   const dtHoursFromInput = input.dt_hours ?? 1;
   const rainSeries =
     input.rain_series && input.rain_series.length > 0
@@ -127,7 +127,7 @@ export function roundJacobiResult(result: {
   };
 }
 
-function deriveTerrainParams(input: CIRSimulationInput): TerrainParams {
+function deriveTerrainParams(input: JacobiSimulationInput): TerrainParams {
   const covariates = input.site?.covariates;
 
   const slope = covariates?.slope ?? null;

@@ -1,14 +1,15 @@
 // ---
-// 📚 WHY: Provides a local CIR engine in TypeScript as a fallback for the Python service.
+// 📚 WHY: Provides a local Jacobi engine in TypeScript as a fallback for the Python service.
 //    If the FastAPI microservice is down or unreachable, the bot must not become useless.
-//    This fallback preserves the same core logic (Euler-Maruyama + Monte Carlo) to
-//    maintain operational continuity without inventing data or degrading to static rules.
+//    This fallback preserves the same core logic (Euler-Maruyama + Monte Carlo over the
+//    rainfall-forced Jacobi SDE, with the exponential hazard link) to maintain operational
+//    continuity without inventing data or degrading to static rules.
 // 📁 FILE: src/infrastructure/simulation/LocalCIREngine.ts
 // ---
 
 import type {
-  CIRSimulationInput,
-  CIRSimulationOutput,
+  JacobiSimulationInput,
+  JacobiSimulationOutput,
   ISimulationEngine,
 } from '../../domain/ports/ISimulationEngine.js';
 import { logger } from '../../config/logger.js';
@@ -18,8 +19,8 @@ import {
   roundJacobiResult,
 } from './jacobiModel.js';
 
-export class LocalCIREngine implements ISimulationEngine {
-  async simulate(input: CIRSimulationInput): Promise<CIRSimulationOutput> {
+export class LocalJacobiEngine implements ISimulationEngine {
+  async simulate(input: JacobiSimulationInput): Promise<JacobiSimulationOutput> {
     const startTime = Date.now();
     const normalized = normalizeJacobiInput(input);
 
@@ -116,6 +117,12 @@ export class LocalCIREngine implements ISimulationEngine {
     return sorted[index] ?? sorted[sorted.length - 1] ?? 0;
   }
 }
+
+/**
+ * @deprecated Legacy name from an earlier prototype: this engine integrates a rainfall-forced
+ * Jacobi diffusion, not a Cox-Ingersoll-Ross square-root diffusion. Use {@link LocalJacobiEngine}.
+ */
+export const LocalCIREngine = LocalJacobiEngine;
 
 class DeterministicNormalGenerator {
   private state: number;

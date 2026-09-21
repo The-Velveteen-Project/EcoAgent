@@ -1,5 +1,5 @@
 // ---
-// 📚 WHY: Implements ISimulationEngine as an HTTP client to the Python CIR engine.
+// 📚 WHY: Implements ISimulationEngine as an HTTP client to the Python Jacobi engine.
 //    Validates the response with Zod at runtime to detect broken contracts between
 //    TypeScript and Python immediately (not in chaotic runtime hours later).
 //    30s timeout because Monte Carlo simulations can be slow with n=10000.
@@ -9,9 +9,9 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios';
 import {
   type ISimulationEngine,
-  type CIRSimulationInput,
-  type CIRSimulationOutput,
-  CIRSimulationOutputSchema,
+  type JacobiSimulationInput,
+  type JacobiSimulationOutput,
+  JacobiSimulationOutputSchema,
 } from '../../domain/ports/ISimulationEngine.js';
 import {
   SimulationServiceUnavailableError,
@@ -20,7 +20,7 @@ import {
 } from './errors.js';
 import { logger } from '../../config/logger.js';
 
-export class PythonCIREngine implements ISimulationEngine {
+export class PythonJacobiEngine implements ISimulationEngine {
   private readonly client: AxiosInstance;
 
   constructor(baseUrl: string) {
@@ -31,7 +31,7 @@ export class PythonCIREngine implements ISimulationEngine {
     });
   }
 
-  async simulate(input: CIRSimulationInput): Promise<CIRSimulationOutput> {
+  async simulate(input: JacobiSimulationInput): Promise<JacobiSimulationOutput> {
     const startTime = Date.now();
 
     try {
@@ -50,7 +50,7 @@ export class PythonCIREngine implements ISimulationEngine {
       });
 
       // Validate response against Zod schema — catches contract mismatches
-      const parsed = CIRSimulationOutputSchema.safeParse(response.data);
+      const parsed = JacobiSimulationOutputSchema.safeParse(response.data);
 
       if (!parsed.success) {
         logger.error(
@@ -66,7 +66,7 @@ export class PythonCIREngine implements ISimulationEngine {
       const elapsed = Date.now() - startTime;
       logger.info(
         { elapsed_ms: elapsed, alert_level: parsed.data.alert_level },
-        'CIR simulation completed'
+        'Jacobi simulation completed'
       );
 
       return parsed.data;
@@ -124,3 +124,9 @@ export class PythonCIREngine implements ISimulationEngine {
     }
   }
 }
+
+/**
+ * @deprecated Legacy name from an earlier prototype: the remote engine integrates a rainfall-forced
+ * Jacobi diffusion, not a Cox-Ingersoll-Ross square-root diffusion. Use {@link PythonJacobiEngine}.
+ */
+export const PythonCIREngine = PythonJacobiEngine;

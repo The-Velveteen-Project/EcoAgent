@@ -7,7 +7,7 @@
 // 📁 FILE: src/application/RiskAnalysisUseCase.ts
 // ---
 
-import type { ISimulationEngine, CIRSimulationOutput } from '../domain/ports/ISimulationEngine.js';
+import type { ISimulationEngine, JacobiSimulationOutput } from '../domain/ports/ISimulationEngine.js';
 import type { IVoiceService } from '../domain/ports/IVoiceService.js';
 import type { IWeatherService, WeatherData } from '../domain/ports/IWeatherService.js';
 import type { ISessionRepository } from '../infrastructure/session/SessionRepository.js';
@@ -24,7 +24,7 @@ import { settings as appSettings } from '../config/settings.js';
 // ── RiskReport Type ──────────────────────────────────────────
 export interface RiskReport {
   readonly weather: WeatherData;
-  readonly simulation: CIRSimulationOutput;
+  readonly simulation: JacobiSimulationOutput;
   readonly audio_buffer?: Buffer;
   readonly generated_at: Date;
   readonly alert_level: AlertThreshold;
@@ -50,7 +50,7 @@ export class RiskAnalysisUseCase {
    * Flow:
    * 1. Read user settings → get their location and preferences
    * 2. Fetch current weather → real-time climate data
-   * 3. Run CIR simulation → stochastic risk assessment
+   * 3. Run Jacobi simulation → stochastic risk assessment
    * 4. Generate AI Executive Summary via OpenRouter
    * 5. If HIGH/CRITICAL + voice_enabled → synthesize voice report
    * 6. Save result to conversation history
@@ -76,7 +76,7 @@ export class RiskAnalysisUseCase {
       { chatId, lat: settings.location_lat, lon: settings.location_lon }
     );
 
-    // 3. Run CIR simulation with weather data
+    // 3. Run Jacobi simulation with weather data
     const site = this.buildConfiguredSite(settings.location_lat, settings.location_lon);
     const initialSaturation = await this.resolveInitialSaturation(site.id);
     const simulation = await this.retryStep(
@@ -177,7 +177,7 @@ export class RiskAnalysisUseCase {
     return report;
   }
 
-  private buildVoiceSummary(weather: WeatherData, sim: CIRSimulationOutput, lang: string): string {
+  private buildVoiceSummary(weather: WeatherData, sim: JacobiSimulationOutput, lang: string): string {
     if (lang === 'en') {
       return (
         `Climate risk alert. ` +
@@ -226,7 +226,7 @@ export class RiskAnalysisUseCase {
     return RiskAnalysisUseCase.COLD_START_S0;
   }
 
-  private extractSaturationEstimate(simulation: CIRSimulationOutput): number {
+  private extractSaturationEstimate(simulation: JacobiSimulationOutput): number {
     return Math.min(Math.max(simulation.S_mean ?? simulation.mean_saturation, 0), 1);
   }
 
@@ -244,7 +244,7 @@ export class RiskAnalysisUseCase {
     return hash >>> 0;
   }
 
-  private buildReportMessage(weather: WeatherData, sim: CIRSimulationOutput, aiSummary: string, lang: string): string {
+  private buildReportMessage(weather: WeatherData, sim: JacobiSimulationOutput, aiSummary: string, lang: string): string {
     const isEn = lang === 'en';
     const emoji =
       sim.alert_level === 'CRITICAL' ? '🔴' :

@@ -1,5 +1,5 @@
 // ---
-// 📚 WHY: Defines the contract between the application and the CIR simulation engine.
+// 📚 WHY: Defines the contract between the application and the Jacobi simulation engine.
 //    Using an interface (port), the bot does not depend directly on the Python implementation.
 //    This allows testing with mocks, changing the engine to Rust/C++ without touching the bot,
 //    and validating inputs/outputs with Zod on both sides of the contract.
@@ -10,7 +10,7 @@ import { z } from 'zod';
 import { SiteSchema } from '../models/Site.js';
 
 // ── Input Schema ─────────────────────────────────────────────
-export const CIRSimulationInputSchema = z.object({
+export const JacobiSimulationInputSchema = z.object({
   /** Accumulated precipitation in millimeters. Drives soil moisture increase. */
   precipitation_mm: z.number().min(0, 'Precipitation cannot be negative'),
 
@@ -57,13 +57,13 @@ export const CIRSimulationInputSchema = z.object({
   site: SiteSchema.optional(),
 });
 
-export type CIRSimulationInput = z.infer<typeof CIRSimulationInputSchema>;
+export type JacobiSimulationInput = z.infer<typeof JacobiSimulationInputSchema>;
 
 // ── Output Schema ────────────────────────────────────────────
 export const AlertLevelSchema = z.enum(['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']);
 export type AlertLevel = z.infer<typeof AlertLevelSchema>;
 
-export const CIRSimulationOutputSchema = z.object({
+export const JacobiSimulationOutputSchema = z.object({
   /** Probability of exceeding the critical saturation threshold over the horizon. */
   prob_failure: z.number().min(0).max(1),
 
@@ -95,17 +95,31 @@ export const CIRSimulationOutputSchema = z.object({
   alert_level: AlertLevelSchema,
 });
 
-export type CIRSimulationOutput = z.infer<typeof CIRSimulationOutputSchema>;
+export type JacobiSimulationOutput = z.infer<typeof JacobiSimulationOutputSchema>;
+
+// ── Legacy CIR aliases ───────────────────────────────────────
+// 📚 WHY: the engine has never been a Cox-Ingersoll-Ross square-root diffusion; that name was
+//    inherited from an earlier prototype. The canonical names above are the Jacobi ones. These
+//    aliases exist only so pre-existing imports keep compiling and can be removed once every
+//    call site has migrated. Do not use them in new code.
+/** @deprecated Use {@link JacobiSimulationInputSchema}. */
+export const CIRSimulationInputSchema = JacobiSimulationInputSchema;
+/** @deprecated Use {@link JacobiSimulationInput}. */
+export type CIRSimulationInput = JacobiSimulationInput;
+/** @deprecated Use {@link JacobiSimulationOutputSchema}. */
+export const CIRSimulationOutputSchema = JacobiSimulationOutputSchema;
+/** @deprecated Use {@link JacobiSimulationOutput}. */
+export type CIRSimulationOutput = JacobiSimulationOutput;
 
 // ── Port Interface ───────────────────────────────────────────
 export interface ISimulationEngine {
   /**
-   * Runs a CIR stochastic simulation with the given climate inputs.
+   * Runs a rainfall-forced Jacobi stochastic simulation with the given climate inputs.
    * @throws SimulationServiceUnavailableError when the engine is unreachable
    * @throws SimulationValidationError when the response fails schema validation
    * @throws SimulationRateLimitError when the engine returns HTTP 429
    */
-  simulate(input: CIRSimulationInput): Promise<CIRSimulationOutput>;
+  simulate(input: JacobiSimulationInput): Promise<JacobiSimulationOutput>;
 
   /**
    * Checks whether the simulation engine is reachable and healthy.

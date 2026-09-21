@@ -35,7 +35,9 @@ export const agentTools: readonly ChatCompletionTool[] = [
     function: {
       name: 'simulate_risk',
       description:
-        'Runs the stochastic CIR (Cox-Ingersoll-Ross) landslide-risk simulation. ' +
+        'Runs the stochastic landslide-risk simulation: a rainfall-forced bounded Jacobi ' +
+        'saturation SDE with an exponential hazard link, returning an integrated-hazard ' +
+        'failure probability. ' +
         'MUST be called before any mention of a risk level, soil-failure probability, ' +
         'or saturation. Uses real weather data internally.',
       parameters: {

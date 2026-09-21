@@ -13,8 +13,8 @@ import { logger } from './config/logger.js';
 
 // ── Infrastructure ───────────────────────────────────────────
 import { FailoverSimulationEngine } from './infrastructure/simulation/FailoverSimulationEngine.js';
-import { LocalCIREngine } from './infrastructure/simulation/LocalCIREngine.js';
-import { PythonCIREngine } from './infrastructure/simulation/PythonCIREngine.js';
+import { LocalJacobiEngine } from './infrastructure/simulation/LocalCIREngine.js';
+import { PythonJacobiEngine } from './infrastructure/simulation/PythonCIREngine.js';
 import { ElevenLabsService } from './infrastructure/voice/ElevenLabsService.js';
 import { OpenMeteoService } from './infrastructure/weather/OpenMeteoService.js';
 import { SupabaseSessionRepository } from './infrastructure/session/SupabaseSessionRepository.js';
@@ -41,8 +41,8 @@ async function main(): Promise<void> {
   logger.info('Composing ALLO dependency graph...');
 
   // 1. Infrastructure layer
-  const pythonSimulationEngine = new PythonCIREngine(settings.PYTHON_API_URL);
-  const localSimulationEngine = new LocalCIREngine();
+  const pythonSimulationEngine = new PythonJacobiEngine(settings.PYTHON_API_URL);
+  const localSimulationEngine = new LocalJacobiEngine();
   const simulationEngine = new FailoverSimulationEngine(
     pythonSimulationEngine,
     localSimulationEngine
@@ -94,9 +94,9 @@ async function main(): Promise<void> {
   // 4. Health check Python engine
   const engineHealthy = await pythonSimulationEngine.healthCheck();
   if (engineHealthy) {
-    logger.info('Python CIR engine is healthy');
+    logger.info('Python Jacobi engine is healthy');
   } else {
-    logger.warn('Python CIR engine is not reachable — local CIR fallback will be used for /clima');
+    logger.warn('Python Jacobi engine is not reachable — local Jacobi fallback will be used for /clima');
   }
 
   // 5. Start bot

@@ -7,8 +7,8 @@
 // ---
 
 import type {
-  CIRSimulationInput,
-  CIRSimulationOutput,
+  JacobiSimulationInput,
+  JacobiSimulationOutput,
   ISimulationEngine,
 } from '../../domain/ports/ISimulationEngine.js';
 import {
@@ -24,7 +24,7 @@ export class FailoverSimulationEngine implements ISimulationEngine {
     private readonly fallback: ISimulationEngine
   ) {}
 
-  async simulate(input: CIRSimulationInput): Promise<CIRSimulationOutput> {
+  async simulate(input: JacobiSimulationInput): Promise<JacobiSimulationOutput> {
     try {
       return await this.primary.simulate(input);
     } catch (err) {

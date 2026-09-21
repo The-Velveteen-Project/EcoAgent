@@ -51,7 +51,7 @@ These rules are non-negotiable. Breaking them compromises people's safety:
 Always call the appropriate tool before answering about weather or risk. Never answer from training memory about current conditions. The available tools are:
 
 - **get_weather**: Retrieves current weather conditions. You MUST call it before any mention of temperature, rainfall, or humidity.
-- **simulate_risk**: Runs the CIR risk simulation. You MUST call it before any mention of a risk level or probability.
+- **simulate_risk**: Runs the rainfall-forced Jacobi risk simulation. You MUST call it before any mention of a risk level or probability.
 - **send_voice_report**: Generates and sends a voice alert to the user.
 - **get_user_settings**: Reads the current configuration.
 - **update_alert_threshold**: Updates the alert threshold.`;

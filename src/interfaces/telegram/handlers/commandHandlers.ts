@@ -76,7 +76,7 @@ export function handleClima(riskAnalysis: RiskAnalysisUseCase) {
       const isEn = ctx.session?.settings.language !== 'es';
 
       let message = isEn
-        ? `🎲 *Stochastic CIR Simulation (Euler-Maruyama)*\n` +
+        ? `🎲 *Stochastic Jacobi Simulation (Euler-Maruyama)*\n` +
           `📍 Manizales, Caldas\n\n` +
           `📊 *Weather Data:*\n` +
           `• Temp: ${report.weather.temperature_c}°C\n` +
@@ -86,7 +86,7 @@ export function handleClima(riskAnalysis: RiskAnalysisUseCase) {
           `${emoji} *Risk Level: ${report.alert_level}*\n` +
           `📈 Probability: ${(report.simulation.risk_probability * 100).toFixed(1)}%\n` +
           `📉 Mean saturation: ${report.simulation.mean_saturation.toFixed(4)} ± ${report.simulation.std_saturation.toFixed(4)}`
-        : `🎲 *Simulación Estocástica CIR (Euler-Maruyama)*\n` +
+        : `🎲 *Simulación Estocástica Jacobi (Euler-Maruyama)*\n` +
           `📍 Manizales, Caldas\n\n` +
           `📊 *Datos Meteorológicos:*\n` +
           `• Temp: ${report.weather.temperature_c}°C\n` +
@@ -223,7 +223,7 @@ export function handleAyuda() {
     if (isEn) {
       await ctx.reply(
         `📖 *ALLO Commands*\n\n` +
-        `/clima — Real-time risk analysis with CIR simulation\n` +
+        `/clima — Real-time risk analysis with Jacobi simulation\n` +
         `/modelo — Explains the underlying mathematical model\n` +
         `/configurar — View your current settings\n` +
         `/umbral [LEVEL] — Change alert threshold (LOW/MEDIUM/HIGH/CRITICAL)\n` +
@@ -234,7 +234,7 @@ export function handleAyuda() {
     } else {
       await ctx.reply(
         `📖 *Comandos de ALLO*\n\n` +
-        `/clima — Análisis de riesgo en tiempo real con simulación CIR\n` +
+        `/clima — Análisis de riesgo en tiempo real con simulación Jacobi\n` +
         `/modelo — Explica el modelo matemático de fondo\n` +
         `/configurar — Ver tu configuración actual\n` +
         `/umbral [NIVEL] — Cambiar umbral de alerta (LOW/MEDIUM/HIGH/CRITICAL)\n` +
