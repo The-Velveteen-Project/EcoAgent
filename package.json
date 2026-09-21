@@ -5,6 +5,9 @@
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "type": "module",
+  "engines": {
+    "node": ">=20 <23"
+  },
   "scripts": {
     "dev": "node --env-file=.env node_modules/tsx/dist/cli.mjs watch src/index.ts",
     "dev:web": "cd web && npm run dev",
