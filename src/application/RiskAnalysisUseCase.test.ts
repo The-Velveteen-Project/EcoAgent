@@ -56,7 +56,7 @@ function createMockSimulation(overrides: Partial<CIRSimulationOutput> = {}): CIR
     S_std: 0.12,
     S_q_high: 0.81,
     hazard_probability_mean: 0.71,
-    model_version: 'jacobi_rainfall_forced_v2',
+    model_version: 'jacobi_rainfall_forced_v3',
     risk_probability: 0.8,
     mean_saturation: 0.65,
     std_saturation: 0.12,

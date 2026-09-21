@@ -170,7 +170,7 @@ describe('LocalCIREngine', () => {
       seed: 1,
     });
 
-    expect(result.model_version).toBe('jacobi_rainfall_forced_v2');
+    expect(result.model_version).toBe('jacobi_rainfall_forced_v3');
     expect(result.risk_probability).toBeGreaterThanOrEqual(0);
   });
 

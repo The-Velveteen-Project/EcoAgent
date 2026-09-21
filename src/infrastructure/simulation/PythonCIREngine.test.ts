@@ -63,7 +63,7 @@ const VALID_RESPONSE = {
   S_std: 0.08,
   S_q_high: 0.61,
   hazard_probability_mean: 0.29,
-  model_version: 'jacobi_rainfall_forced_v2',
+  model_version: 'jacobi_rainfall_forced_v3',
   risk_probability: 0.35,
   mean_saturation: 0.42,
   std_saturation: 0.08,

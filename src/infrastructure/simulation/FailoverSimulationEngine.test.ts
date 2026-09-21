@@ -29,7 +29,7 @@ const OUTPUT = {
   S_std: 0.07,
   S_q_high: 0.63,
   hazard_probability_mean: 0.22,
-  model_version: 'jacobi_rainfall_forced_v2',
+  model_version: 'jacobi_rainfall_forced_v3',
   risk_probability: 0.27,
   mean_saturation: 0.51,
   std_saturation: 0.07,

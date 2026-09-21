@@ -1,6 +1,6 @@
 import type { AlertLevel, JacobiSimulationInput, JacobiSimulationOutput } from '../../domain/ports/ISimulationEngine.js';
 
-export const JACOBI_MODEL_VERSION = 'jacobi_rainfall_forced_v2';
+export const JACOBI_MODEL_VERSION = 'jacobi_rainfall_forced_v3';
 const HOURS_PER_DAY = 24;
 const EPSILON = 1e-9;
 const A25_ALERT_ANCHORS_MM = {
