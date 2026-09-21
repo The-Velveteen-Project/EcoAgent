@@ -1,0 +1,51 @@
+# Citation metadata for ALLO. Validate with: cffconvert --validate
+#
+# TO FILL AT RELEASE TIME (Zenodo mints the DOI only after the GitHub release exists):
+#   - doi:            the Zenodo *version* DOI of the v1.0.0 release
+#   - date-released:  the date of that release, YYYY-MM-DD
+#   - the concept DOI ("all versions") under identifiers
+# They are left out rather than filled with a placeholder so this file never asserts a DOI that
+# does not resolve.
+
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite it using the metadata from this file.
+type: software
+title: "ALLO: Adaptive Landslide Learning Observatory"
+abstract: >-
+  ALLO is a research prototype of an early-warning and decision-support system for
+  rainfall-triggered landslides on Andean hillslopes, with Manizales (Caldas, Colombia) as its
+  initial case. A TypeScript agentic bot orchestrates weather ingestion, a Python (FastAPI)
+  stochastic simulation service with an in-process TypeScript failover engine, and a
+  language-model layer that explains results but does not compute them. The scientific core
+  models latent soil saturation as a rainfall-forced bounded Jacobi (Wright-Fisher) diffusion
+  with an exponential hazard link, propagated by seeded Monte Carlo and mapped to four alert
+  levels anchored to the 25-day antecedent-rainfall index (A25) of the Manizales early-warning
+  system. The repository includes the project model card and an executable regression suite
+  that carries the model card's invariants into the user-facing explanation layer.
+authors:
+  - family-names: "Orrego Franco"
+    given-names: "Carlos Manuel"
+    orcid: "https://orcid.org/0009-0001-9163-5137"
+    affiliation: "Universidad Nacional de Colombia, Sede Manizales"
+  - family-names: "Castañeda Cardona"
+    given-names: "Mateo"
+    orcid: "https://orcid.org/0009-0009-4149-6851"
+    affiliation: "Universidad Nacional de Colombia, Sede Manizales"
+  - family-names: "Riaño-Rojas"
+    given-names: "Juan Carlos"
+    orcid: "https://orcid.org/0000-0002-5719-2854"
+    affiliation: "Universidad Nacional de Colombia, Sede Manizales"
+repository-code: "https://github.com/The-Velveteen-Project/EcoAgent"
+url: "https://github.com/The-Velveteen-Project/EcoAgent"
+license: Apache-2.0
+version: "1.0.0"
+keywords:
+  - landslide early warning
+  - stochastic differential equation
+  - Jacobi diffusion
+  - hazard model
+  - agentic system
+  - large language model guardrails
+  - research software
+  - Manizales

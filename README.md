@@ -107,6 +107,16 @@ cd web && npm run build
 - External data and deployment claims should be checked against `docs/DATA_SOURCES.md` before being
   surfaced in product copy or code.
 
+## How to cite
+
+Citation metadata lives in [CITATION.cff](CITATION.cff); GitHub renders it under "Cite this
+repository" in the sidebar, in APA and BibTeX. Until the archived release has a DOI, cite the
+repository itself:
+
+> Orrego Franco, C. M., Castañeda Cardona, M., & Riaño-Rojas, J. C. (2026). *ALLO: Adaptive
+> Landslide Learning Observatory* (Version 1.0.0) [Computer software].
+> https://github.com/The-Velveteen-Project/EcoAgent
+
 ## License
 
 Copyright 2026 Universidad Nacional de Colombia, Sede Manizales.
