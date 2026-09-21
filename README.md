@@ -1,5 +1,7 @@
 # ALLO
 
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
 **Adaptive Landslide Learning Observatory**  
 *Stochastic and agentic monitoring for climate-related landslide risk.*
 
@@ -104,3 +106,17 @@ cd web && npm run build
   scientific framing is defined in the ALLO model card.
 - External data and deployment claims should be checked against `docs/DATA_SOURCES.md` before being
   surfaced in product copy or code.
+
+## License
+
+Copyright 2026 Universidad Nacional de Colombia, Sede Manizales.
+
+ALLO is released under the [Apache License, Version 2.0](LICENSE); see [NOTICE](NOTICE) for the
+copyright statement. You may use, modify and redistribute the code under the terms of that license,
+which includes an explicit patent grant. The software is provided "as is", without warranty of any
+kind: ALLO is a research prototype for decision support, not a certified warning service, and its
+outputs must not be the sole basis for an evacuation or civil-protection decision.
+
+Third-party services that ALLO calls (Open-Meteo, OpenRouter, ElevenLabs, Supabase) and the datasets
+listed in [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md) are governed by their own terms, not by this
+license.
