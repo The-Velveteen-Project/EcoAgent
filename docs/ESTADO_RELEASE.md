@@ -14,6 +14,7 @@ verificar está marcado como tal. **Aún sin tag ni DOI** (ver «Pendiente»).
 | `b0e469d` | `CITATION.cff` (válido contra el esquema CFF 1.2.0 con `cffconvert`) y sección «How to cite» |
 | `9522325` | Requisitos declarados: `engines` (Node ≥20 <23), `.nvmrc`, tablas de requisitos y de credenciales en el README |
 | `15ab39d` | `evaluation/llm_fidelity/`: arnés, método, 596 filas por generación y resultados agregados |
+| `a8a9fef` | Motor Python v3 (PCG64, config única sin parámetros CIR, `prob_failure` hazard-link, Michaelis-Menten) con cuatro defectos de integración corregidos y tests: contrato Python–Zod, carga de `.env`, unidades de ρ, ventana de alerta de 25 días |
 
 Push normal, sin `--force`, sin reescritura de historia, sin tocar tags. GitHub detecta la licencia
 como Apache-2.0. Los despliegues que dispara cada push (Railway para el bot, Vercel para la web)
@@ -32,20 +33,16 @@ terminaron en `success` para `0e62d11`.
 | Secretos en el historial (55 commits) | ninguno; el `.env` de `222bfb1`, borrado en `9bcca39`, solo tenía marcadores |
 | Build de producción del bot (`npm ci --ignore-scripts` + `npm run build`) | pasa |
 
-Las cifras 98, 38 y 60 del manuscrito son correctas **en `d39a5eb`**. Ver §4 sobre cómo cambian.
+Las cifras 98, 38 y 60 del manuscrito son correctas **en `d39a5eb`**. En `a8a9fef` (exportación limpia de
+`origin/main`): `tsc` limpio, TypeScript **102/102** en 10 archivos (98 + 4 de contrato), Python **39/39**.
 
-## 3. Lo que el repositorio todavía NO sostiene del manuscrito
+## 3. El motor v3 y lo que aún no sostiene el manuscrito
 
-**El motor Python del repo sigue siendo v2.** `eco-stochast-poc/python_engine/main.py` usa un
-generador LCG, reporta como `prob_failure` la fracción de trayectorias cuyo pico supera Sc, usa un
-humedecimiento exponencial y emite `jacobi_rainfall_forced_v2`; `config.py` conserva los parámetros
-CIR `a`, `b`. La tabla de invariantes del manuscrito (filas 1, 4, 5 y 6) describe el motor v3.
-
-El motor v3 existe (artefactos de Claude Science del 16-jul) y está preparado y probado en
-`~/Personal/ALLO/ecoagent_v3_landing/` (ver su `LEEME.md`), pero **no está aplicado**: el
-clasificador de permisos de la sesión de Claude Code bloqueó la sustitución de `main.py`. Aplicarlo
-son dos comandos. Al ejecutarlo tal como fue escrito aparecieron cuatro defectos de integración,
-todos corregidos y con test en el paquete:
+Hasta `a107940` el Python del repo era v2 (LCG, `prob_failure` como conteo de cruces, humedecimiento
+exponencial, parámetros CIR en `config.py`), en contradicción con las filas 1, 4, 5 y 6 de la tabla de
+invariantes del manuscrito. `a8a9fef` aterriza el motor v3 escrito el 16-jul. Al ejecutarlo contra el
+bot real aparecieron cuatro defectos de integración, todos corregidos, cada uno con un test que se
+pone rojo si se quita el arreglo:
 
 1. La respuesta no traía `hazard_probability_mean`, que el Zod del bot exige: toda respuesta fallaba
    la validación y el failover respondía el 100 % de las veces, con solo un warn en el log.
@@ -54,14 +51,17 @@ todos corregidos y con test en el paquete:
    horarios y 0,83 en un bin diario.
 4. Con el patrón de llamada del bot (24 bins horarios, 24 h) la alerta solo podía ser LOW: con S = 1
    todo el día, P = 0,103 < 0,15. Causa: la tabla de disparadores publicada se calculó sobre la
-   probabilidad integrada a **25 días** (`memo_recalibracion.md`, l. 137) y el bot integra 24 h. El
-   paquete declara `alert_horizon_days = 25` y aplica las bandas a esa probabilidad, bajo un supuesto
-   de persistencia del hazard que hay que declarar en limitaciones. No cambia bandas (0,70/0,40/0,15),
+   probabilidad integrada a **25 días** (`memo_recalibracion.md`, l. 137) y el bot integra 24 h.
+   Ahora `alert_horizon_days = 25` y las bandas se aplican a esa probabilidad, bajo un supuesto de
+   persistencia del hazard que hay que declarar en limitaciones. No cambian bandas (0,70/0,40/0,15),
    anclas (200/300/400 mm) ni parámetros del hazard.
 
-Ensayo del paquete sobre una exportación de HEAD: TypeScript **102/102** (98 + 4 de contrato),
-Python **39/39**, y llamada en vivo al servicio v3 con el `PythonJacobiEngine` real a través de
-`FailoverSimulationEngine` (Zod acepta, responde el primario).
+Verificado además en vivo: servicio v3 levantado en local y llamado con el `PythonJacobiEngine` real
+a través de `FailoverSimulationEngine` (Zod acepta, responde el primario).
+
+Sigue abierto: los parámetros del hazard en `config.py` son los provisionales (0,015; 9; 0,78), no los
+recalibrados del §5 del manuscrito; con ellos la base es MEDIUM (P25 = 0,31) y CRITICAL exige
+S ≳ 0,91. El fallback TypeScript no cambió: conteo de cruces sobre 24 h, como declara el manuscrito.
 
 **Producción — no verificado desde Railway, inferido del registro público de deployments de GitHub.**
 El único servicio que sigue a `main` es el bot. El segundo servicio de Railway se desplegó por última
@@ -76,7 +76,7 @@ pero el driver que llamó al modelo no está, así que no se pueden producir gen
 
 ## 4. Correcciones que esto implica en el manuscrito
 
-- Si se aplica el paquete v3, la suite TypeScript del tag será 102/102, no 98/98. Decir «98/98 en el
+- La suite TypeScript del tag es 102/102, no 98/98. Decir «98/98 en el
   commit de la corrección» o actualizar la cifra.
 - Declarar la ventana de 25 días y el supuesto de persistencia.
 - «Re-runnable end to end» → «re-auditable»; o añadir el driver.
@@ -89,9 +89,9 @@ pero el driver que llamó al modelo no está, así que no se pueden producir gen
 
 | Qué | Quién | Por qué no está |
 |---|---|---|
-| Aplicar el paquete v3 al repo | Carlos (o conceder el permiso) | bloqueado por el clasificador de permisos |
 | Activar la integración Zenodo–GitHub | Carlos, en el navegador | Zenodo solo archiva releases creados después de activarla |
 | Tag `v1.0.0`, release, DOI; rellenar `doi` y `date-released` en `CITATION.cff` y el README | tras lo anterior | orden obligatorio |
 | Versión: `package.json` dice 2.0.0, el FastAPI v3 dice 3.0.0 y el tag planeado es `v1.0.0` | decidir | `MODEL_CARD` dice «v1» y `web/package.json` 1.0.0; recomendado bajar `package.json` a 1.0.0 |
-| `README.md` § Notes aún dice que el repo contiene «legacy stochastic engine components» | tras aplicar v3 | hoy es cierto |
+| `README.md` § Notes aún dice que el repo contiene «legacy stochastic engine components» | decidir redacción | sigue siendo cierto del fallback TS y de la demo web |
+| Redesplegar el servicio Python de Railway desde v3 | Carlos | `main` no lo redespliega solo |
 | `docs/MODEL_CARD.md` invariante 6 define la probabilidad como «excedencia de Sc»; el manuscrito y v3 la definen como hazard-link | Carlos | es el documento de verdad científica; no se tocó |
